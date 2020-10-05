@@ -68,6 +68,7 @@ class _SignInState extends State<SignIn> {
 
                       SizedBox(height: 20.0),
                       TextFormField(
+                        style: TextStyle(color: Colors.white54),
                         validator: (val) => val.isEmpty ?  'Enter an Email': null,
                         onChanged: (val){
                           setState(() {
@@ -88,6 +89,7 @@ class _SignInState extends State<SignIn> {
                       ),
                       SizedBox(height: 20.0),
                       TextFormField(
+                        style: TextStyle(color: Colors.white54),
                         validator: (val) => val.length <6 ? 'Enter a password 6+ chars long ': null,
                         obscureText: true,
                         onChanged: (val) {

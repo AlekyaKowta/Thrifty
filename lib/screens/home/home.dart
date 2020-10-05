@@ -8,17 +8,17 @@ class Home extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.brown[50],
+      backgroundColor: Colors.blueGrey[800],
       appBar: AppBar(
         title: Text('Thrifty'),
-        backgroundColor: Colors.brown[400],
+        backgroundColor: Colors.black45,
         elevation: 0.0,
         actions: <Widget>[
           FlatButton.icon(onPressed: () async{
                 await _auth.signOut();
           },
-              icon: Icon(Icons.people),
-              label: Text('Logout'),
+              icon: Icon(Icons.people, color: Colors.white54),
+              label: Text('Logout', style: TextStyle(color: Colors.white54)),
           )
         ],
       ),

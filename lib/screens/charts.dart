@@ -5,9 +5,32 @@ import 'package:thrifty/screens/sab.dart';
 import 'package:thrifty/services/auth.dart';
 
 
-class Charts extends StatelessWidget {
+class Charts extends StatefulWidget {
   static const String routeName = '/charts';
+
+  @override
+  _ChartsState createState() => _ChartsState();
+}
+
+class _ChartsState extends State<Charts> {
   final AuthService _auth = AuthService();
+
+    DateTime selectedDate = DateTime.now();
+
+
+  _selectDate(BuildContext context) async {
+  final DateTime picked = await showDatePicker(
+    context: context,
+    initialDate: selectedDate, // Refer step 1
+    firstDate: DateTime(2000),
+    lastDate: DateTime(2025),
+  );
+  if (picked != null && picked != selectedDate)
+    setState(() {
+      selectedDate = picked;
+    });
+
+}
 
   @override
   Widget build(BuildContext context) {
@@ -129,7 +152,50 @@ class Charts extends StatelessWidget {
           ),
         ),
       ),
-      body: Text('Charts'),
+      body: Padding(
+        padding: const EdgeInsets.all(10.0),
+        child: Column(
+          children: [
+            Center(
+              child: Container(
+                child: Text(
+                  'Charts',
+                     style: TextStyle(
+                     color: Colors.white,
+                     fontSize: 27.0,
+                     fontWeight: FontWeight.bold),
+                ),
+              ),
+            ),
+            SizedBox(height:10.0,),
+                //DatePicker here 
+                new Container(
+                   child: Column(
+                      mainAxisSize: MainAxisSize.min,
+                      children: <Widget>[
+          
+                        SizedBox(
+                          height: 5.0,
+                        ),
+                        Container(
+                          width: 180.0,
+                          height:50.0,
+                          child: RaisedButton(
+                            onPressed: () => _selectDate(context), // Refer step 3
+                            child: Text(
+                              "${selectedDate.toLocal()}".split(' ')[0],
+                              style:
+                                  TextStyle(color: Colors.black, fontWeight: FontWeight.bold, fontSize: 20.0),
+                            ),
+                            color: Color(0xFFEC7F79),
+                          ),
+                        ),
+                      ],
+                    ),
+                ),
+          ],
+        ),
+      ),
     );
   }
 }

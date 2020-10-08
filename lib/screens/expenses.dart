@@ -370,12 +370,22 @@ class _ExpensesState extends State<Expenses> {
                       ),
                     ],
                   ),
-                    )
+                    ),
+                    // FloatingActionButton(
+                    //    onPressed: () {
+                    //       showMyDialog(context);
+                    //     },
+                    //     child: Icon(Icons.add_circle),
+                    //     backgroundColor: Color(0xFFE4475B),
+                
+                    // ),
               ],
             ),
+            
           ),
           
           ),
+          
       ),
     );
     

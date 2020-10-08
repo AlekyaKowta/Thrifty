@@ -1,12 +1,12 @@
 import 'package:flutter/material.dart';
-import 'package:thrifty/screens/charts.dart';
 import 'package:thrifty/screens/expenses.dart';
+import 'package:thrifty/screens/home/home.dart';
 import 'package:thrifty/screens/sab.dart';
 import 'package:thrifty/services/auth.dart';
-import 'package:thrifty/routes/routes.dart';
 
-class Home extends StatelessWidget {
-  static const String routeName = '/';
+
+class Charts extends StatelessWidget {
+  static const String routeName = '/charts';
   final AuthService _auth = AuthService();
 
   @override
@@ -21,15 +21,6 @@ class Home extends StatelessWidget {
         ),
         backgroundColor: Colors.black45,
         elevation: 0.0,
-        // actions: <Widget>[
-        //   FlatButton.icon(
-        //     onPressed: () async {
-        //       await _auth.signOut();
-        //     },
-        //     icon: Icon(Icons.people, color: Colors.white54),
-        //     label: Text('Logout', style: TextStyle(color: Colors.white54)),
-        //   )
-        // ],
       ),
       endDrawer: Theme(
         data: Theme.of(context).copyWith(
@@ -62,6 +53,24 @@ class Home extends StatelessWidget {
                   //Navigator.pop(context);
                 },
               ),
+              // ListTile(
+              //   leading: Icon(Icons.home, color: Colors.white),
+              //   title: Text(
+              //     'Home',
+              //     style: TextStyle(fontSize: 20.0, color: Colors.white),
+              //   ),
+              //   onTap: () {
+              //     // Update the state of the app
+              //     // ...
+              //     // Then close the drawer
+              //     //  Navigator.pop(context);
+              //     //  Navigator.pushNamed(context, Routes.setabudget);
+              //     Navigator.of(context).pushReplacement(
+              //         MaterialPageRoute(builder: (context) => Home()));
+                     
+              //   },
+                
+              // ),
               ListTile(
                 leading: Icon(Icons.attach_money, color: Colors.white),
                 title: Text(
@@ -120,6 +129,7 @@ class Home extends StatelessWidget {
           ),
         ),
       ),
+      body: Text('Charts'),
     );
   }
 }

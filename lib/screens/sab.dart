@@ -1,13 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:thrifty/screens/charts.dart';
 import 'package:thrifty/screens/expenses.dart';
-import 'package:thrifty/screens/sab.dart';
+import 'package:thrifty/screens/home/home.dart';
 import 'package:thrifty/services/auth.dart';
-import 'package:thrifty/routes/routes.dart';
 
-class Home extends StatelessWidget {
-  static const String routeName = '/';
+
+class SetABudget extends StatelessWidget {
+  static const String routeName = '/setabudget';
   final AuthService _auth = AuthService();
+  final _formKey = GlobalKey<FormState>();
 
   @override
   Widget build(BuildContext context) {
@@ -21,15 +22,6 @@ class Home extends StatelessWidget {
         ),
         backgroundColor: Colors.black45,
         elevation: 0.0,
-        // actions: <Widget>[
-        //   FlatButton.icon(
-        //     onPressed: () async {
-        //       await _auth.signOut();
-        //     },
-        //     icon: Icon(Icons.people, color: Colors.white54),
-        //     label: Text('Logout', style: TextStyle(color: Colors.white54)),
-        //   )
-        // ],
       ),
       endDrawer: Theme(
         data: Theme.of(context).copyWith(
@@ -62,6 +54,7 @@ class Home extends StatelessWidget {
                   //Navigator.pop(context);
                 },
               ),
+              
               ListTile(
                 leading: Icon(Icons.attach_money, color: Colors.white),
                 title: Text(
@@ -117,6 +110,87 @@ class Home extends StatelessWidget {
                 },
               ),
             ],
+          ),
+        ),
+      ),
+      body: Padding(
+        padding: const EdgeInsets.all(5.0),
+        child: Center(
+          child: Container(
+            child: SingleChildScrollView(
+                child: Column(
+                children: [
+                  SizedBox(height: 10.0,),
+                  Text(
+                    'Monthly Budget: ',
+                    style: TextStyle(color: Color(0xFFEC7F79), fontSize: 27.0, fontWeight:FontWeight.bold),
+                    ),
+                    Form(
+                    key: _formKey,
+                     child: Column(
+                       children: <Widget>[
+                         SizedBox(height: 50.0,),
+                         Container(
+                           width: 300.0,
+                           child: TextFormField(
+                             decoration: InputDecoration(
+                               hintText: 'Enter your Budget',
+                               fillColor: Colors.white,
+                               filled: true,
+                               enabledBorder: OutlineInputBorder(
+                                 borderSide: BorderSide(color: Colors.white, width:2.0,)
+                                 ),
+                                 focusedBorder: OutlineInputBorder(
+                                 borderSide: BorderSide(color: Color(0xFFEC7F79), width:2.0,)
+                                 ),
+                             ),
+                              style: TextStyle(color: Colors.black),
+                              validator: (val) => val.isEmpty ?  'Enter your Budget': null,
+                              onChanged: null,
+                              // setState(() { // set state later to take input
+                              //   email= val;
+                              // });
+                           ),
+                            
+                         ),
+                          SizedBox(height: 40.0),
+                        SizedBox(
+                            height: 50.0,
+                            width: 300.0,
+                           child: RaisedButton(
+                             color: Color(0xFFE4475B),
+                             child: Text(
+                                 'Submit',
+                                 style: TextStyle(
+                                     color: Colors.white,
+                                     fontSize: 18.0,
+                                 )
+                             ),
+                             onPressed: () {},
+                            //  onPressed: () async{
+                            //    if (_formKey.currentState.validate()){
+                            //      setState(() {
+                            //        loading = true;
+                            //      });
+                            //      dynamic result = await _auth.signInWithEmailAndPassword(email, password);
+                            //      if (result == null){
+                            //        setState(() {
+                            //          error = "Couldn't sign in with those credentials";
+                            //          loading = false;
+                            //        });
+
+                            //      }
+                            //    }
+                            //  },
+
+                           )
+                        ),
+                       ],
+                     ), 
+                    ),
+                ],
+              ),
+            ),
           ),
         ),
       ),

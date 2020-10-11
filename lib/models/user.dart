@@ -1,4 +1,4 @@
-import 'package:thrifty/models/expenses.dart';
+import 'package:thrifty/models/expensemodel.dart';
 
 class User {
   final String uid;

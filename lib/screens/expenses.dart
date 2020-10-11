@@ -3,7 +3,8 @@ import 'package:thrifty/screens/charts.dart';
 import 'package:thrifty/screens/home/home.dart';
 import 'package:thrifty/screens/sab.dart';
 import 'package:thrifty/services/auth.dart';
-import 'package:thrifty/models/expenses.dart';
+import 'package:thrifty/models/expensemodel.dart';
+import 'package:thrifty/models/user.dart';
 
 class Expenses extends StatefulWidget {
   static const String routeName = '/expenses';
@@ -18,6 +19,13 @@ class _ExpensesState extends State<Expenses> {
   DateTime selectedDate = DateTime.now();
 
   Expense expense;
+  final List<Expense> expenseList = [
+    Expense(title: "Pizza", amount: 200.0, time: DateTime.now()),
+    Expense(title: "Pasta", amount: 400.0, time: DateTime.now()),
+    Expense(title: "Fries", amount: 500.0, time: DateTime.now()),
+    Expense(title: "Books", amount: 600.0, time: DateTime.now()),
+    Expense(title: "Laundry", amount: 300.0, time: DateTime.now()),
+  ];
 
   _selectDate(BuildContext context) async {
     final DateTime picked = await showDatePicker(
@@ -209,7 +217,25 @@ class _ExpensesState extends State<Expenses> {
                         fontSize: 25.0,
                       )),
                 ),
+
+                // CARDS 
+
                 new Container(
+                  child: new ListView.builder(
+                    itemCount : expenseList.length,
+                    itemBuilder: (BuildContext context, int index)=> buildExpenseCard(context,index),
+                  ),
+                ),
+              ],
+            ),
+          ),
+        ),
+      ),
+    );
+  }
+
+  Widget buildExpenseCard(BuildContext context, int index){
+    return new Container(
                   child: Column(
                     children: [
                       SizedBox(
@@ -260,159 +286,11 @@ class _ExpensesState extends State<Expenses> {
                       SizedBox(
                         height: 10.0,
                       ),
-                      Card(
-                        color: Color(0xFFEC7F79),
-                        child: Column(
-                          //mainAxisSize: MainAxisSize.min,
-
-                          children: <Widget>[
-                            ListTile(
-                              leading: Icon(Icons.album, size: 50),
-                              title: Text('Pizza',
-                                  style:
-                                      TextStyle(fontWeight: FontWeight.bold)),
-                              subtitle: Text('500',
-                                  style:
-                                      TextStyle(fontWeight: FontWeight.bold)),
-                              trailing: Row(
-                                mainAxisSize: MainAxisSize.min,
-                                children: <Widget>[
-                                  IconButton(
-                                    icon: Icon(
-                                      Icons.edit,
-                                      size: 20.0,
-                                      color: Colors.black,
-                                    ),
-                                    onPressed: () {
-                                      //   _onDeleteItemPressed(index);
-                                    },
-                                  ),
-                                  IconButton(
-                                    icon: Icon(
-                                      Icons.delete_outline,
-                                      size: 20.0,
-                                      color: Colors.black,
-                                    ),
-                                    onPressed: () {
-                                      //   _onDeleteItemPressed(index);
-                                    },
-                                  ),
-                                ],
-                              ),
-                            ),
-                          ],
-                        ),
-                      ),
-                      SizedBox(
-                        height: 10.0,
-                      ),
-                      Card(
-                        color: Color(0xFFDB394E),
-                        child: Column(
-                          //mainAxisSize: MainAxisSize.min,
-
-                          children: <Widget>[
-                            ListTile(
-                              leading: Icon(Icons.album, size: 50),
-                              title: Text('Pizza',
-                                  style:
-                                      TextStyle(fontWeight: FontWeight.bold)),
-                              subtitle: Text('500',
-                                  style:
-                                      TextStyle(fontWeight: FontWeight.bold)),
-                              trailing: Row(
-                                mainAxisSize: MainAxisSize.min,
-                                children: <Widget>[
-                                  IconButton(
-                                    icon: Icon(
-                                      Icons.edit,
-                                      size: 20.0,
-                                      color: Colors.black,
-                                    ),
-                                    onPressed: () {
-                                      //   _onDeleteItemPressed(index);
-                                    },
-                                  ),
-                                  IconButton(
-                                    icon: Icon(
-                                      Icons.delete_outline,
-                                      size: 20.0,
-                                      color: Colors.black,
-                                    ),
-                                    onPressed: () {
-                                      //   _onDeleteItemPressed(index);
-                                    },
-                                  ),
-                                ],
-                              ),
-                            ),
-                          ],
-                        ),
-                      ),
-                      SizedBox(
-                        height: 10.0,
-                      ),
-                      Card(
-                        color: Color(0xFFEC7F79),
-                        child: Column(
-                          //mainAxisSize: MainAxisSize.min,
-
-                          children: <Widget>[
-                            ListTile(
-                              leading: Icon(Icons.album, size: 50),
-                              title: Text('Pizza',
-                                  style:
-                                      TextStyle(fontWeight: FontWeight.bold)),
-                              subtitle: Text('500',
-                                  style:
-                                      TextStyle(fontWeight: FontWeight.bold)),
-                              trailing: Row(
-                                mainAxisSize: MainAxisSize.min,
-                                children: <Widget>[
-                                  IconButton(
-                                    icon: Icon(
-                                      Icons.edit,
-                                      size: 20.0,
-                                      color: Colors.black,
-                                    ),
-                                    onPressed: () {
-                                      //   _onDeleteItemPressed(index);
-                                    },
-                                  ),
-                                  IconButton(
-                                    icon: Icon(
-                                      Icons.delete_outline,
-                                      size: 20.0,
-                                      color: Colors.black,
-                                    ),
-                                    onPressed: () {
-                                      //   _onDeleteItemPressed(index);
-                                    },
-                                  ),
-                                ],
-                              ),
-                            ),
-                          ],
-                        ),
-                      ),
-                    ],
+                    ]
                   ),
-                ),
-                // FloatingActionButton(
-                //    onPressed: () {
-                //       showMyDialog(context);
-                //     },
-                //     child: Icon(Icons.add_circle),
-                //     backgroundColor: Color(0xFFE4475B),
-
-                // ),
-              ],
-            ),
-          ),
-        ),
-      ),
     );
   }
+
 }
 
 void showMyDialog(BuildContext context) {

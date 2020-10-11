@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/rendering.dart';
 import 'package:thrifty/screens/charts.dart';
 import 'package:thrifty/screens/home/home.dart';
 import 'package:thrifty/screens/sab.dart';
+import 'package:thrifty/screens/wrapper.dart';
 import 'package:thrifty/services/auth.dart';
 import 'package:thrifty/models/expensemodel.dart';
 
@@ -80,6 +82,7 @@ class _ExpensesState extends State<Expenses> {
                 ),
                 onTap: () async {
                   await _auth.signOut();
+                  print('cool');
                   //Navigator.pop(context);
                 },
               ),
@@ -138,291 +141,81 @@ class _ExpensesState extends State<Expenses> {
       ),
       body: Padding(
         padding: const EdgeInsets.all(20.0),
-        child: Container(
-          child: SingleChildScrollView(
-            child: Column(
+        child: Column(
+          children: [
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    Text(
-                      "Expenses",
-                      style: TextStyle(
-                          color: Colors.white,
-                          fontSize: 27.0,
-                          fontWeight: FontWeight.bold),
-                    ),
-                    IconButton(
-                        onPressed: () {
-                          showMyDialog(context);
-                        },
-                        icon: Icon(
-                          Icons.add_circle,
-                          color: Color(0xFFE4475B),
-                          size: 43.0,
-                        )),
-                  ],
+                Text(
+                  "Expenses",
+                  style: TextStyle(
+                      color: Colors.white,
+                      fontSize: 27.0,
+                      fontWeight: FontWeight.bold),
                 ),
-                SizedBox(
-                  height: 10.0,
-                ),
-                //DatePicker here
-                new Container(
-                  child: Column(
-                    mainAxisSize: MainAxisSize.min,
-                    children: <Widget>[
-                      // Text(
-                      //   "${selectedDate.toLocal()}".split(' ')[0],
-                      //   style: TextStyle(fontSize:20.0, fontWeight: FontWeight.bold, color: Colors.white,),
-                      // ),
-                      SizedBox(
-                        height: 5.0,
-                      ),
-                      Container(
-                        width: 180.0,
-                        height: 50.0,
-                        child: RaisedButton(
-                          onPressed: () => _selectDate(context), // Refer step 3
-                          child: Text(
-                            "${selectedDate.toLocal()}".split(' ')[0],
-                            style: TextStyle(
-                                color: Colors.black,
-                                fontWeight: FontWeight.bold,
-                                fontSize: 20.0),
-                          ),
-                          color: Color(0xFFEC7F79),
-                        ),
-                      ),
-                    ],
+                IconButton(
+                  onPressed: () {
+                    showMyDialog(context);
+                  },
+                  icon: Icon(
+                    Icons.add_circle,
+                    color: Color(0xFFE4475B),
+                    size: 43.0,
                   ),
                 ),
-                SizedBox(
-                  height: 10.0,
-                ),
-                new Container(
-                  margin: const EdgeInsets.all(3.0),
-                  padding: const EdgeInsets.all(10.0),
-                  decoration: BoxDecoration(
-                      border: Border.all(
-                        color: Color(0xFFEC7F79),
-                        width: 2.0,
-                      ),
-                      borderRadius: BorderRadius.all(
-                        Radius.circular(5.0),
-                      )),
-                  child: Text(" Total: Rs.200 ",
-                      style: TextStyle(
-                        color: Color(0xFFEC7F79),
-                        fontSize: 25.0,
-                      )),
-                ),
-                new Container(
-                  child: new ListView.builder(
-                    itemCount: expenseList.length,
-                    itemBuilder: (BuildContext context, int index) =>
-                        buildExpenseCard(context, index),
-                  ),
-                ),
-                // new Container(
-                //   child: Column(
-                //     children: [
-                //       // SizedBox(
-                //       //   height: 10.0,
-                //       // ),
-                //       // Card(
-                //       //   color: Color(0xFFDB394E),
-                //       //   child: Column(
-                //       //     mainAxisSize: MainAxisSize.min,
-                //       //     children: <Widget>[
-                //       //       ListTile(
-                //       //         leading: Icon(Icons.album, size: 50),
-                //       //         title: Text(expense.title,
-                //       //             style:
-                //       //                 TextStyle(fontWeight: FontWeight.bold)),
-                //       //         subtitle: Text(expense.amount.toString(),
-                //       //             style:
-                //       //                 TextStyle(fontWeight: FontWeight.bold)),
-                //       //         trailing: Row(
-                //       //           mainAxisSize: MainAxisSize.min,
-                //       //           children: <Widget>[
-                //       //             IconButton(
-                //       //               icon: Icon(
-                //       //                 Icons.edit,
-                //       //                 size: 20.0,
-                //       //                 color: Colors.black,
-                //       //               ),
-                //       //               onPressed: () {
-                //       //                 //   _onDeleteItemPressed(index);
-                //       //               },
-                //       //             ),
-                //       //             IconButton(
-                //       //               icon: Icon(
-                //       //                 Icons.delete_outline,
-                //       //                 size: 20.0,
-                //       //                 color: Colors.black,
-                //       //               ),
-                //       //               onPressed: () {
-                //       //                 //   _onDeleteItemPressed(index);
-                //       //               },
-                //       //             ),
-                //       //           ],
-                //       //         ),
-                //       //       ),
-                //       //     ],
-                //       //   ),
-                //       // ),
-                //       SizedBox(
-                //         height: 10.0,
-                //       ),
-                //       Card(
-                //         color: Color(0xFFEC7F79),
-                //         child: Column(
-                //           //mainAxisSize: MainAxisSize.min,
-
-                //           children: <Widget>[
-                //             ListTile(
-                //               leading: Icon(Icons.album, size: 50),
-                //               title: Text('Pizza',
-                //                   style:
-                //                       TextStyle(fontWeight: FontWeight.bold)),
-                //               subtitle: Text('500',
-                //                   style:
-                //                       TextStyle(fontWeight: FontWeight.bold)),
-                //               trailing: Row(
-                //                 mainAxisSize: MainAxisSize.min,
-                //                 children: <Widget>[
-                //                   IconButton(
-                //                     icon: Icon(
-                //                       Icons.edit,
-                //                       size: 20.0,
-                //                       color: Colors.black,
-                //                     ),
-                //                     onPressed: () {
-                //                       //   _onDeleteItemPressed(index);
-                //                     },
-                //                   ),
-                //                   IconButton(
-                //                     icon: Icon(
-                //                       Icons.delete_outline,
-                //                       size: 20.0,
-                //                       color: Colors.black,
-                //                     ),
-                //                     onPressed: () {
-                //                       //   _onDeleteItemPressed(index);
-                //                     },
-                //                   ),
-                //                 ],
-                //               ),
-                //             ),
-                //           ],
-                //         ),
-                //       ),
-                //       SizedBox(
-                //         height: 10.0,
-                //       ),
-                //       Card(
-                //         color: Color(0xFFDB394E),
-                //         child: Column(
-                //           //mainAxisSize: MainAxisSize.min,
-
-                //           children: <Widget>[
-                //             ListTile(
-                //               leading: Icon(Icons.album, size: 50),
-                //               title: Text('Pizza',
-                //                   style:
-                //                       TextStyle(fontWeight: FontWeight.bold)),
-                //               subtitle: Text('500',
-                //                   style:
-                //                       TextStyle(fontWeight: FontWeight.bold)),
-                //               trailing: Row(
-                //                 mainAxisSize: MainAxisSize.min,
-                //                 children: <Widget>[
-                //                   IconButton(
-                //                     icon: Icon(
-                //                       Icons.edit,
-                //                       size: 20.0,
-                //                       color: Colors.black,
-                //                     ),
-                //                     onPressed: () {
-                //                       //   _onDeleteItemPressed(index);
-                //                     },
-                //                   ),
-                //                   IconButton(
-                //                     icon: Icon(
-                //                       Icons.delete_outline,
-                //                       size: 20.0,
-                //                       color: Colors.black,
-                //                     ),
-                //                     onPressed: () {
-                //                       //   _onDeleteItemPressed(index);
-                //                     },
-                //                   ),
-                //                 ],
-                //               ),
-                //             ),
-                //           ],
-                //         ),
-                //       ),
-                //       SizedBox(
-                //         height: 10.0,
-                //       ),
-                //       Card(
-                //         color: Color(0xFFEC7F79),
-                //         child: Column(
-                //           //mainAxisSize: MainAxisSize.min,
-
-                //           children: <Widget>[
-                //             ListTile(
-                //               leading: Icon(Icons.album, size: 50),
-                //               title: Text('Pizza',
-                //                   style:
-                //                       TextStyle(fontWeight: FontWeight.bold)),
-                //               subtitle: Text('500',
-                //                   style:
-                //                       TextStyle(fontWeight: FontWeight.bold)),
-                //               trailing: Row(
-                //                 mainAxisSize: MainAxisSize.min,
-                //                 children: <Widget>[
-                //                   IconButton(
-                //                     icon: Icon(
-                //                       Icons.edit,
-                //                       size: 20.0,
-                //                       color: Colors.black,
-                //                     ),
-                //                     onPressed: () {
-                //                       //   _onDeleteItemPressed(index);
-                //                     },
-                //                   ),
-                //                   IconButton(
-                //                     icon: Icon(
-                //                       Icons.delete_outline,
-                //                       size: 20.0,
-                //                       color: Colors.black,
-                //                     ),
-                //                     onPressed: () {
-                //                       //   _onDeleteItemPressed(index);
-                //                     },
-                //                   ),
-                //                 ],
-                //               ),
-                //             ),
-                //           ],
-                //         ),
-                //       ),
-                //     ],
-                //   ),
-                // ),
-                // FloatingActionButton(
-                //    onPressed: () {
-                //       showMyDialog(context);
-                //     },
-                //     child: Icon(Icons.add_circle),
-                //     backgroundColor: Color(0xFFE4475B),
-
-                // ),
               ],
             ),
-          ),
+            SizedBox(
+              height: 15.0,
+            ),
+            Container(
+              width: 180.0,
+              height: 50.0,
+              child: RaisedButton(
+                onPressed: () => _selectDate(context), // Refer step 3
+                child: Text(
+                  "${selectedDate.toLocal()}".split(' ')[0],
+                  style: TextStyle(
+                      color: Colors.black,
+                      fontWeight: FontWeight.bold,
+                      fontSize: 20.0),
+                ),
+                color: Color(0xFFEC7F79),
+              ),
+            ),
+            SizedBox(
+              height: 10.0,
+            ),
+            Container(
+              margin: const EdgeInsets.all(3.0),
+              padding: const EdgeInsets.all(10.0),
+              decoration: BoxDecoration(
+                  border: Border.all(
+                    color: Color(0xFFEC7F79),
+                    width: 2.0,
+                  ),
+                  borderRadius: BorderRadius.all(
+                    Radius.circular(5.0),
+                  )),
+              child: Text(" Total: Rs.200 ",
+                  style: TextStyle(
+                    color: Color(0xFFEC7F79),
+                    fontSize: 25.0,
+                  )),
+            ),
+            SizedBox(
+              height: 10.0,
+            ),
+            Expanded(
+              child: ListView.builder(
+                shrinkWrap: true,
+                itemCount: expenseList.length,
+                itemBuilder: (BuildContext context, int index) {
+                  return buildExpenseCard(context, index);
+                },
+              ),
+            ),
+          ],
         ),
       ),
     );
@@ -430,7 +223,7 @@ class _ExpensesState extends State<Expenses> {
 
   Widget buildExpenseCard(BuildContext context, int index) {
     final expenseL = expenseList[index];
-    return new Container(
+    return Container(
       child: Column(
         children: <Widget>[
           SizedBox(
@@ -438,47 +231,53 @@ class _ExpensesState extends State<Expenses> {
           ),
           Card(
             color: Color(0xFFDB394E),
-            child: Flexible(
-                child: Column(
-                mainAxisSize: MainAxisSize.min,
-                children: <Widget>[
-                  ListTile(
-                    leading: Icon(Icons.account_balance, size: 50),
-                    title: Text(expenseL.title,
-                        style: TextStyle(fontWeight: FontWeight.bold)),
-                    subtitle: Text(expenseL.amount.toString(),
-                        style: TextStyle(fontWeight: FontWeight.bold)),
-                    trailing: Row(
-                      mainAxisSize: MainAxisSize.min,
-                      children: [
-                        IconButton(
-                          icon: Icon(
-                            Icons.edit,
-                            size: 20.0,
-                            color: Colors.black,
-                          ),
-                          onPressed: () {},
+            child: Column(
+              mainAxisSize: MainAxisSize.min,
+              children: <Widget>[
+                ListTile(
+                  leading: Icon(Icons.account_balance, size: 50),
+                  title: Text(expenseL.title,
+                      style: TextStyle(fontWeight: FontWeight.bold)),
+                  subtitle: Text(expenseL.amount.toString(),
+                      style: TextStyle(fontWeight: FontWeight.bold)),
+                  trailing: Row(
+                    mainAxisSize: MainAxisSize.min,
+                    children: [
+                      IconButton(
+                        icon: Icon(
+                          Icons.edit,
+                          size: 20.0,
+                          color: Colors.black,
                         ),
-                        IconButton(
-                          icon: Icon(
-                            Icons.delete_outline,
-                            size: 20.0,
-                            color: Colors.black,
-                          ),
-                          onPressed: () {
-                            
-                          },
+                        onPressed: () {},
+                      ),
+                      IconButton(
+                        icon: Icon(
+                          Icons.delete_outline,
+                          size: 20.0,
+                          color: Colors.black,
                         ),
-                      ],
-                    ),
+                        onPressed: () {},
+                      ),
+                    ],
                   ),
-                ],
-              ),
+                ),
+              ],
             ),
           ),
         ],
       ),
     );
+  }
+}
+
+class NewCard extends StatelessWidget {
+  final int index;
+
+  const NewCard({Key key, this.index}) : super(key: key);
+  @override
+  Widget build(BuildContext context) {
+    return Container();
   }
 }
 

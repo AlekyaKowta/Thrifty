@@ -4,7 +4,6 @@ import 'package:thrifty/screens/home/home.dart';
 import 'package:thrifty/screens/sab.dart';
 import 'package:thrifty/services/auth.dart';
 import 'package:thrifty/models/expensemodel.dart';
-import 'package:thrifty/models/user.dart';
 
 class Expenses extends StatefulWidget {
   static const String routeName = '/expenses';
@@ -217,9 +216,6 @@ class _ExpensesState extends State<Expenses> {
                         fontSize: 25.0,
                       )),
                 ),
-
-                // CARDS
-
                 new Container(
                   child: new ListView.builder(
                     itemCount: expenseList.length,
@@ -227,6 +223,203 @@ class _ExpensesState extends State<Expenses> {
                         buildExpenseCard(context, index),
                   ),
                 ),
+                // new Container(
+                //   child: Column(
+                //     children: [
+                //       // SizedBox(
+                //       //   height: 10.0,
+                //       // ),
+                //       // Card(
+                //       //   color: Color(0xFFDB394E),
+                //       //   child: Column(
+                //       //     mainAxisSize: MainAxisSize.min,
+                //       //     children: <Widget>[
+                //       //       ListTile(
+                //       //         leading: Icon(Icons.album, size: 50),
+                //       //         title: Text(expense.title,
+                //       //             style:
+                //       //                 TextStyle(fontWeight: FontWeight.bold)),
+                //       //         subtitle: Text(expense.amount.toString(),
+                //       //             style:
+                //       //                 TextStyle(fontWeight: FontWeight.bold)),
+                //       //         trailing: Row(
+                //       //           mainAxisSize: MainAxisSize.min,
+                //       //           children: <Widget>[
+                //       //             IconButton(
+                //       //               icon: Icon(
+                //       //                 Icons.edit,
+                //       //                 size: 20.0,
+                //       //                 color: Colors.black,
+                //       //               ),
+                //       //               onPressed: () {
+                //       //                 //   _onDeleteItemPressed(index);
+                //       //               },
+                //       //             ),
+                //       //             IconButton(
+                //       //               icon: Icon(
+                //       //                 Icons.delete_outline,
+                //       //                 size: 20.0,
+                //       //                 color: Colors.black,
+                //       //               ),
+                //       //               onPressed: () {
+                //       //                 //   _onDeleteItemPressed(index);
+                //       //               },
+                //       //             ),
+                //       //           ],
+                //       //         ),
+                //       //       ),
+                //       //     ],
+                //       //   ),
+                //       // ),
+                //       SizedBox(
+                //         height: 10.0,
+                //       ),
+                //       Card(
+                //         color: Color(0xFFEC7F79),
+                //         child: Column(
+                //           //mainAxisSize: MainAxisSize.min,
+
+                //           children: <Widget>[
+                //             ListTile(
+                //               leading: Icon(Icons.album, size: 50),
+                //               title: Text('Pizza',
+                //                   style:
+                //                       TextStyle(fontWeight: FontWeight.bold)),
+                //               subtitle: Text('500',
+                //                   style:
+                //                       TextStyle(fontWeight: FontWeight.bold)),
+                //               trailing: Row(
+                //                 mainAxisSize: MainAxisSize.min,
+                //                 children: <Widget>[
+                //                   IconButton(
+                //                     icon: Icon(
+                //                       Icons.edit,
+                //                       size: 20.0,
+                //                       color: Colors.black,
+                //                     ),
+                //                     onPressed: () {
+                //                       //   _onDeleteItemPressed(index);
+                //                     },
+                //                   ),
+                //                   IconButton(
+                //                     icon: Icon(
+                //                       Icons.delete_outline,
+                //                       size: 20.0,
+                //                       color: Colors.black,
+                //                     ),
+                //                     onPressed: () {
+                //                       //   _onDeleteItemPressed(index);
+                //                     },
+                //                   ),
+                //                 ],
+                //               ),
+                //             ),
+                //           ],
+                //         ),
+                //       ),
+                //       SizedBox(
+                //         height: 10.0,
+                //       ),
+                //       Card(
+                //         color: Color(0xFFDB394E),
+                //         child: Column(
+                //           //mainAxisSize: MainAxisSize.min,
+
+                //           children: <Widget>[
+                //             ListTile(
+                //               leading: Icon(Icons.album, size: 50),
+                //               title: Text('Pizza',
+                //                   style:
+                //                       TextStyle(fontWeight: FontWeight.bold)),
+                //               subtitle: Text('500',
+                //                   style:
+                //                       TextStyle(fontWeight: FontWeight.bold)),
+                //               trailing: Row(
+                //                 mainAxisSize: MainAxisSize.min,
+                //                 children: <Widget>[
+                //                   IconButton(
+                //                     icon: Icon(
+                //                       Icons.edit,
+                //                       size: 20.0,
+                //                       color: Colors.black,
+                //                     ),
+                //                     onPressed: () {
+                //                       //   _onDeleteItemPressed(index);
+                //                     },
+                //                   ),
+                //                   IconButton(
+                //                     icon: Icon(
+                //                       Icons.delete_outline,
+                //                       size: 20.0,
+                //                       color: Colors.black,
+                //                     ),
+                //                     onPressed: () {
+                //                       //   _onDeleteItemPressed(index);
+                //                     },
+                //                   ),
+                //                 ],
+                //               ),
+                //             ),
+                //           ],
+                //         ),
+                //       ),
+                //       SizedBox(
+                //         height: 10.0,
+                //       ),
+                //       Card(
+                //         color: Color(0xFFEC7F79),
+                //         child: Column(
+                //           //mainAxisSize: MainAxisSize.min,
+
+                //           children: <Widget>[
+                //             ListTile(
+                //               leading: Icon(Icons.album, size: 50),
+                //               title: Text('Pizza',
+                //                   style:
+                //                       TextStyle(fontWeight: FontWeight.bold)),
+                //               subtitle: Text('500',
+                //                   style:
+                //                       TextStyle(fontWeight: FontWeight.bold)),
+                //               trailing: Row(
+                //                 mainAxisSize: MainAxisSize.min,
+                //                 children: <Widget>[
+                //                   IconButton(
+                //                     icon: Icon(
+                //                       Icons.edit,
+                //                       size: 20.0,
+                //                       color: Colors.black,
+                //                     ),
+                //                     onPressed: () {
+                //                       //   _onDeleteItemPressed(index);
+                //                     },
+                //                   ),
+                //                   IconButton(
+                //                     icon: Icon(
+                //                       Icons.delete_outline,
+                //                       size: 20.0,
+                //                       color: Colors.black,
+                //                     ),
+                //                     onPressed: () {
+                //                       //   _onDeleteItemPressed(index);
+                //                     },
+                //                   ),
+                //                 ],
+                //               ),
+                //             ),
+                //           ],
+                //         ),
+                //       ),
+                //     ],
+                //   ),
+                // ),
+                // FloatingActionButton(
+                //    onPressed: () {
+                //       showMyDialog(context);
+                //     },
+                //     child: Icon(Icons.add_circle),
+                //     backgroundColor: Color(0xFFE4475B),
+
+                // ),
               ],
             ),
           ),
@@ -238,54 +431,53 @@ class _ExpensesState extends State<Expenses> {
   Widget buildExpenseCard(BuildContext context, int index) {
     final expenseL = expenseList[index];
     return new Container(
-      child: Column(children: [
-        SizedBox(
-          height: 10.0,
-        ),
-        Card(
-          color: Color(0xFFDB394E),
-          child: Column(
-            mainAxisSize: MainAxisSize.min,
-            children: <Widget>[
-              ListTile(
-                leading: Icon(Icons.album, size: 50),
-                title: Text(expenseL.title,
-                    style: TextStyle(fontWeight: FontWeight.bold)),
-                subtitle: Text(expenseL.amount.toString(),
-                    style: TextStyle(fontWeight: FontWeight.bold)),
-                trailing: Row(
-                  mainAxisSize: MainAxisSize.min,
-                  children: <Widget>[
-                    IconButton(
-                      icon: Icon(
-                        Icons.edit,
-                        size: 20.0,
-                        color: Colors.black,
-                      ),
-                      onPressed: () {
-                        //   _onDeleteItemPressed(index);
-                      },
-                    ),
-                    IconButton(
-                      icon: Icon(
-                        Icons.delete_outline,
-                        size: 20.0,
-                        color: Colors.black,
-                      ),
-                      onPressed: () {
-                        //   _onDeleteItemPressed(index);
-                      },
-                    ),
-                  ],
-                ),
-              ),
-            ],
+      child: Column(
+        children: <Widget>[
+          SizedBox(
+            height: 10.0,
           ),
-        ),
-        SizedBox(
-          height: 10.0,
-        ),
-      ]),
+          Card(
+            color: Color(0xFFDB394E),
+            child: Flexible(
+                child: Column(
+                mainAxisSize: MainAxisSize.min,
+                children: <Widget>[
+                  ListTile(
+                    leading: Icon(Icons.account_balance, size: 50),
+                    title: Text(expenseL.title,
+                        style: TextStyle(fontWeight: FontWeight.bold)),
+                    subtitle: Text(expenseL.amount.toString(),
+                        style: TextStyle(fontWeight: FontWeight.bold)),
+                    trailing: Row(
+                      mainAxisSize: MainAxisSize.min,
+                      children: [
+                        IconButton(
+                          icon: Icon(
+                            Icons.edit,
+                            size: 20.0,
+                            color: Colors.black,
+                          ),
+                          onPressed: () {},
+                        ),
+                        IconButton(
+                          icon: Icon(
+                            Icons.delete_outline,
+                            size: 20.0,
+                            color: Colors.black,
+                          ),
+                          onPressed: () {
+                            
+                          },
+                        ),
+                      ],
+                    ),
+                  ),
+                ],
+              ),
+            ),
+          ),
+        ],
+      ),
     );
   }
 }

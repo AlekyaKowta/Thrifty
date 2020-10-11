@@ -197,7 +197,7 @@ class _ExpensesState extends State<Expenses> {
                   borderRadius: BorderRadius.all(
                     Radius.circular(5.0),
                   )),
-              child: Text(" Total: Rs.200 ",
+              child: Text("Total: ",
                   style: TextStyle(
                     color: Color(0xFFEC7F79),
                     fontSize: 25.0,
@@ -223,63 +223,119 @@ class _ExpensesState extends State<Expenses> {
 
   Widget buildExpenseCard(BuildContext context, int index) {
     final expenseL = expenseList[index];
-    return Container(
-      child: Column(
-        children: <Widget>[
-          SizedBox(
-            height: 10.0,
-          ),
-          Card(
-            color: Color(0xFFDB394E),
-            child: Column(
-              mainAxisSize: MainAxisSize.min,
-              children: <Widget>[
-                ListTile(
-                  leading: Icon(Icons.account_balance, size: 50),
-                  title: Text(expenseL.title,
-                      style: TextStyle(fontWeight: FontWeight.bold)),
-                  subtitle: Text(expenseL.amount.toString(),
-                      style: TextStyle(fontWeight: FontWeight.bold)),
-                  trailing: Row(
-                    mainAxisSize: MainAxisSize.min,
-                    children: [
-                      IconButton(
-                        icon: Icon(
-                          Icons.edit,
-                          size: 20.0,
-                          color: Colors.black,
-                        ),
-                        onPressed: () {},
-                      ),
-                      IconButton(
-                        icon: Icon(
-                          Icons.delete_outline,
-                          size: 20.0,
-                          color: Colors.black,
-                        ),
-                        onPressed: () {},
-                      ),
-                    ],
-                  ),
-                ),
-              ],
+    if (index % 2 == 0) {
+      return Container(
+        child: Column(
+          children: <Widget>[
+            SizedBox(
+              height: 10.0,
             ),
-          ),
-        ],
-      ),
-    );
+            Card(
+              color: Color(0xFFDB394E),
+              child: Column(
+                mainAxisSize: MainAxisSize.min,
+                children: <Widget>[
+                  ListTile(
+                    leading: Icon(Icons.account_balance, size: 50),
+                    title: Text(expenseL.title,
+                        style: TextStyle(fontWeight: FontWeight.bold)),
+                    subtitle: Text(expenseL.amount.toString(),
+                        style: TextStyle(fontWeight: FontWeight.bold)),
+                    trailing: Row(
+                      mainAxisSize: MainAxisSize.min,
+                      children: [
+                        IconButton(
+                          icon: Icon(
+                            Icons.edit,
+                            size: 20.0,
+                            color: Colors.black,
+                          ),
+                          onPressed: () {},
+                        ),
+                        IconButton(
+                          icon: Icon(
+                            Icons.delete_outline,
+                            size: 20.0,
+                            color: Colors.black,
+                          ),
+                          onPressed: () {},
+                        ),
+                      ],
+                    ),
+                  ),
+                ],
+              ),
+            ),
+          ],
+        ),
+      );
+    } else {
+      return Container(
+        child: Column(
+          children: <Widget>[
+            SizedBox(
+              height: 10.0,
+            ),
+            Card(
+              color: Color(0xFFEC7F79),
+              child: Column(
+                mainAxisSize: MainAxisSize.min,
+                children: <Widget>[
+                  ListTile(
+                    leading: Icon(Icons.account_balance, size: 50),
+                    title: Text(expenseL.title,
+                        style: TextStyle(fontWeight: FontWeight.bold)),
+                    subtitle: Text(expenseL.amount.toString(),
+                        style: TextStyle(fontWeight: FontWeight.bold)),
+                    trailing: Row(
+                      mainAxisSize: MainAxisSize.min,
+                      children: [
+                        IconButton(
+                          icon: Icon(
+                            Icons.edit,
+                            size: 20.0,
+                            color: Colors.black,
+                          ),
+                          onPressed: () {},
+                        ),
+                        IconButton(
+                          icon: Icon(
+                            Icons.delete_outline,
+                            size: 20.0,
+                            color: Colors.black,
+                          ),
+                          onPressed: () {},
+                        ),
+                      ],
+                    ),
+                  ),
+                ],
+              ),
+            ),
+          ],
+        ),
+      );
+    }
   }
 }
 
-class NewCard extends StatelessWidget {
-  final int index;
+// class NewCard extends StatelessWidget {
+//   final int index;
 
-  const NewCard({Key key, this.index}) : super(key: key);
-  @override
-  Widget build(BuildContext context) {
-    return Container();
-  }
-}
+//   const NewCard({Key key, this.index}) : super(key: key);
+//   @override
+//   Widget build(BuildContext context) {
+//     return Container();
+//   }
+// }
+
+// int calcTotal(List<Expense> expenseList) {
+//   int i;
+//   int sum = 0;
+//   for (i = 0; i < expenseList.length; i++) {
+//     return sum = sum + expenseList[i].amount;
+//   }
+// }
 
 void showMyDialog(BuildContext context) {
   showDialog<bool>(

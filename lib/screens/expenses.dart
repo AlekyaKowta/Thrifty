@@ -218,12 +218,13 @@ class _ExpensesState extends State<Expenses> {
                       )),
                 ),
 
-                // CARDS 
+                // CARDS
 
                 new Container(
                   child: new ListView.builder(
-                    itemCount : expenseList.length,
-                    itemBuilder: (BuildContext context, int index)=> buildExpenseCard(context,index),
+                    itemCount: expenseList.length,
+                    itemBuilder: (BuildContext context, int index) =>
+                        buildExpenseCard(context, index),
                   ),
                 ),
               ],
@@ -234,63 +235,59 @@ class _ExpensesState extends State<Expenses> {
     );
   }
 
-  Widget buildExpenseCard(BuildContext context, int index){
+  Widget buildExpenseCard(BuildContext context, int index) {
+    final expenseL = expenseList[index];
     return new Container(
-                  child: Column(
-                    children: [
-                      SizedBox(
-                        height: 10.0,
+      child: Column(children: [
+        SizedBox(
+          height: 10.0,
+        ),
+        Card(
+          color: Color(0xFFDB394E),
+          child: Column(
+            mainAxisSize: MainAxisSize.min,
+            children: <Widget>[
+              ListTile(
+                leading: Icon(Icons.album, size: 50),
+                title: Text(expenseL.title,
+                    style: TextStyle(fontWeight: FontWeight.bold)),
+                subtitle: Text(expenseL.amount.toString(),
+                    style: TextStyle(fontWeight: FontWeight.bold)),
+                trailing: Row(
+                  mainAxisSize: MainAxisSize.min,
+                  children: <Widget>[
+                    IconButton(
+                      icon: Icon(
+                        Icons.edit,
+                        size: 20.0,
+                        color: Colors.black,
                       ),
-                      Card(
-                        color: Color(0xFFDB394E),
-                        child: Column(
-                          mainAxisSize: MainAxisSize.min,
-                          children: <Widget>[
-                            ListTile(
-                              leading: Icon(Icons.album, size: 50),
-                              title: Text(expense.title,
-                                  style:
-                                      TextStyle(fontWeight: FontWeight.bold)),
-                              subtitle: Text(expense.amount.toString(),
-                                  style:
-                                      TextStyle(fontWeight: FontWeight.bold)),
-                              trailing: Row(
-                                mainAxisSize: MainAxisSize.min,
-                                children: <Widget>[
-                                  IconButton(
-                                    icon: Icon(
-                                      Icons.edit,
-                                      size: 20.0,
-                                      color: Colors.black,
-                                    ),
-                                    onPressed: () {
-                                      //   _onDeleteItemPressed(index);
-                                    },
-                                  ),
-                                  IconButton(
-                                    icon: Icon(
-                                      Icons.delete_outline,
-                                      size: 20.0,
-                                      color: Colors.black,
-                                    ),
-                                    onPressed: () {
-                                      //   _onDeleteItemPressed(index);
-                                    },
-                                  ),
-                                ],
-                              ),
-                            ),
-                          ],
-                        ),
+                      onPressed: () {
+                        //   _onDeleteItemPressed(index);
+                      },
+                    ),
+                    IconButton(
+                      icon: Icon(
+                        Icons.delete_outline,
+                        size: 20.0,
+                        color: Colors.black,
                       ),
-                      SizedBox(
-                        height: 10.0,
-                      ),
-                    ]
-                  ),
+                      onPressed: () {
+                        //   _onDeleteItemPressed(index);
+                      },
+                    ),
+                  ],
+                ),
+              ),
+            ],
+          ),
+        ),
+        SizedBox(
+          height: 10.0,
+        ),
+      ]),
     );
   }
-
 }
 
 void showMyDialog(BuildContext context) {

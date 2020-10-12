@@ -146,7 +146,7 @@ class SetABudget extends StatelessWidget {
                              ),
                               style: TextStyle(color: Colors.black),
                               validator: (val) => val.isEmpty ?  'Enter your Budget': null,
-                              onChanged: null,
+                              onChanged: (val) {},
                               // setState(() { // set state later to take input
                               //   email= val;
                               // });

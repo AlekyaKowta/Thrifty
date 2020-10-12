@@ -20,7 +20,8 @@ class _ExpensesState extends State<Expenses> {
   DateTime selectedDate = DateTime.now();
 
   Expense expense;
-  final List<Expense> expenseList = [
+
+   List<Expense> expenseList = [
     Expense(title: "Pizza", amount: 200.0, time: DateTime.now()),
     Expense(title: "Pasta", amount: 400.0, time: DateTime.now()),
     Expense(title: "Fries", amount: 500.0, time: DateTime.now()),
@@ -154,8 +155,11 @@ class _ExpensesState extends State<Expenses> {
                       fontWeight: FontWeight.bold),
                 ),
                 IconButton(
-                  onPressed: () {
-                    showMyDialog(context);
+                  onPressed: ()  {
+                    Expense returnedEl = showMyDialog(context, expenseList);
+                    setState(() {
+                       expenseList.add(returnedEl);
+                    });
                   },
                   icon: Icon(
                     Icons.add_circle,
@@ -197,7 +201,8 @@ class _ExpensesState extends State<Expenses> {
                   borderRadius: BorderRadius.all(
                     Radius.circular(5.0),
                   )),
-              child: Text("Total: ",
+              child: Text(
+                  "Total: ${calcTotal(this.expenseList).toStringAsFixed(2)} ",
                   style: TextStyle(
                     color: Color(0xFFEC7F79),
                     fontSize: 25.0,
@@ -236,10 +241,10 @@ class _ExpensesState extends State<Expenses> {
                 mainAxisSize: MainAxisSize.min,
                 children: <Widget>[
                   ListTile(
-                    leading: Icon(Icons.account_balance, size: 50),
+                    leading: Icon(Icons.account_balance_wallet, size: 50),
                     title: Text(expenseL.title,
                         style: TextStyle(fontWeight: FontWeight.bold)),
-                    subtitle: Text(expenseL.amount.toString(),
+                    subtitle: Text(expenseL.amount.toStringAsFixed(2),
                         style: TextStyle(fontWeight: FontWeight.bold)),
                     trailing: Row(
                       mainAxisSize: MainAxisSize.min,
@@ -285,7 +290,7 @@ class _ExpensesState extends State<Expenses> {
                     leading: Icon(Icons.account_balance, size: 50),
                     title: Text(expenseL.title,
                         style: TextStyle(fontWeight: FontWeight.bold)),
-                    subtitle: Text(expenseL.amount.toString(),
+                    subtitle: Text(expenseL.amount.toStringAsFixed(2),
                         style: TextStyle(fontWeight: FontWeight.bold)),
                     trailing: Row(
                       mainAxisSize: MainAxisSize.min,
@@ -329,15 +334,18 @@ class _ExpensesState extends State<Expenses> {
 //   }
 // }
 
-// int calcTotal(List<Expense> expenseList) {
-//   int i;
-//   int sum = 0;
-//   for (i = 0; i < expenseList.length; i++) {
-//     return sum = sum + expenseList[i].amount;
-//   }
-// }
+double calcTotal(List<Expense> expenseList) {
+  int i;
+  double sum = 0;
+  for (i = 0; i < expenseList.length; i++) {
+    sum = sum + expenseList[i].amount;
+  }
+  return sum;
+}
 
-void showMyDialog(BuildContext context) {
+Expense showMyDialog(BuildContext context, List<Expense> expenseList) {
+  final expenseField = new TextEditingController();
+  final descField = new TextEditingController();
   showDialog<bool>(
     context: context,
     builder: (BuildContext context) {
@@ -362,6 +370,7 @@ void showMyDialog(BuildContext context) {
                       height: 10.0,
                     ),
                     TextFormField(
+                      controller: expenseField,
                       decoration: InputDecoration(
                         hintText: 'Enter your Expenses',
                         fillColor: Colors.white,
@@ -378,9 +387,8 @@ void showMyDialog(BuildContext context) {
                         )),
                       ),
                       style: TextStyle(color: Colors.black),
-                      validator: (val) =>
-                          val.isEmpty ? 'Enter Description' : null,
-                      onChanged: null,
+                      validator: (val) => val.isEmpty ? 'Enter Expenses' : null,
+                      onChanged: (val) {},
                     ),
                     SizedBox(
                       height: 20.0,
@@ -397,6 +405,7 @@ void showMyDialog(BuildContext context) {
                       height: 10.0,
                     ),
                     TextFormField(
+                      controller: descField,
                       decoration: InputDecoration(
                         hintText: 'Description',
                         fillColor: Colors.white,
@@ -414,8 +423,8 @@ void showMyDialog(BuildContext context) {
                       ),
                       style: TextStyle(color: Colors.black),
                       validator: (val) =>
-                          val.isEmpty ? 'Enter your Budget' : null,
-                      onChanged: null,
+                          val.isEmpty ? 'Enter Description' : null,
+                      onChanged: (val) {},
                     ),
                     SizedBox(
                       height: 30.0,
@@ -430,6 +439,19 @@ void showMyDialog(BuildContext context) {
                       ),
                       onPressed: () {
                         Navigator.of(context).pop(true);
+                        // expenseList.add(Expense(
+                        //     title: descField.text,
+                        //     amount: double.parse(expenseField.text),
+                        //     time: DateTime.now()));
+                        print(double.parse(expenseField.text));
+                        print(descField.text);
+                        // return Expense(
+                        //     title: descField.text,
+                        //     amount: double.parse(expenseField.text),
+                        //     time: DateTime.now());
+                        print(Expense(title: descField.text,
+                           amount: double.parse(expenseField.text),
+                          time: DateTime.now()));
                         // adding code
                       },
                     ),
@@ -451,4 +473,11 @@ void showMyDialog(BuildContext context) {
       );
     },
   );
+  print(Expense(title: descField.text,
+      amount: double.parse(expenseField.text),
+      time: DateTime.now()));
+  return Expense(
+      title: descField.text,
+      amount: double.parse(expenseField.text),
+      time: DateTime.now());
 }

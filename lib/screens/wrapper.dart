@@ -4,6 +4,7 @@ import 'package:thrifty/screens/authenticate/authenticate.dart';
 import 'package:thrifty/models/user.dart';
 import 'package:provider/provider.dart';
 
+
 class Wrapper extends StatelessWidget {
   @override
   Widget build(BuildContext context) {

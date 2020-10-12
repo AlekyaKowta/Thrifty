@@ -58,7 +58,7 @@ class Home extends StatelessWidget {
                   style: TextStyle(fontSize: 20.0, color: Colors.white),
                 ),
                 onTap: () async {
-                   await _auth.signOut();
+                  await _auth.signOut();
                   //Navigator.pop(context);
                 },
               ),
@@ -74,11 +74,11 @@ class Home extends StatelessWidget {
                   // Then close the drawer
                   //  Navigator.pop(context);
                   //  Navigator.pushNamed(context, Routes.setabudget);
+                  
                   Navigator.of(context).pushReplacement(
                       MaterialPageRoute(builder: (context) => SetABudget()));
-                     
+                 
                 },
-                
               ),
               ListTile(
                 leading:
@@ -95,9 +95,7 @@ class Home extends StatelessWidget {
                   // Navigator.pushNamed(context, Routes.expenses);
                   Navigator.of(context).pushReplacement(
                       MaterialPageRoute(builder: (context) => Expenses()));
-                      
                 },
-                
               ),
               ListTile(
                 leading: Icon(Icons.graphic_eq, color: Colors.white),
@@ -113,7 +111,6 @@ class Home extends StatelessWidget {
                   //  Navigator.pushNamed(context, Routes.charts);
                   Navigator.of(context).pushReplacement(
                       MaterialPageRoute(builder: (context) => Charts()));
-                      
                 },
               ),
             ],

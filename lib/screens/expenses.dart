@@ -19,7 +19,7 @@ class _ExpensesState extends State<Expenses> {
 
   Expense expense;
 
-   List<Expense> expenseList = [
+  List<Expense> expenseList = [
     Expense(title: "Pizza", amount: 200.0, time: DateTime.now()),
     Expense(title: "Pasta", amount: 400.0, time: DateTime.now()),
     Expense(title: "Fries", amount: 500.0, time: DateTime.now()),
@@ -153,10 +153,11 @@ class _ExpensesState extends State<Expenses> {
                       fontWeight: FontWeight.bold),
                 ),
                 IconButton(
-                  onPressed: ()  {
-                    Expense returnedEl = showMyDialog(context, expenseList);
+                  onPressed: () async {
+                    Expense returnedEl =
+                        await showMyDialog(context, expenseList);
                     setState(() {
-                       expenseList.add(returnedEl);
+                      expenseList.add(returnedEl);
                     });
                   },
                   icon: Icon(
@@ -341,141 +342,125 @@ double calcTotal(List<Expense> expenseList) {
   return sum;
 }
 
-Expense showMyDialog(BuildContext context, List<Expense> expenseList) {
+Future<Expense> showMyDialog(
+    BuildContext context, List<Expense> expenseList) async {
   final expenseField = new TextEditingController();
   final descField = new TextEditingController();
-  showDialog<bool>(
-    context: context,
-    builder: (BuildContext context) {
-      return AlertDialog(
-        backgroundColor: Color(0xFFEC7F79),
-        content: SingleChildScrollView(
-          child: new Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              Form(
-                child: Column(
-                  children: [
-                    Text(
-                      'Enter Expenses:',
-                      style: TextStyle(
-                        color: Colors.black,
-                        fontWeight: FontWeight.bold,
-                        fontSize: 20.0,
-                      ),
-                    ),
-                    SizedBox(
-                      height: 10.0,
-                    ),
-                    TextFormField(
-                      controller: expenseField,
-                      decoration: InputDecoration(
-                        hintText: 'Enter your Expenses',
-                        fillColor: Colors.white,
-                        filled: true,
-                        enabledBorder: OutlineInputBorder(
-                            borderSide: BorderSide(
-                          color: Colors.white,
-                          width: 2.0,
-                        )),
-                        focusedBorder: OutlineInputBorder(
-                            borderSide: BorderSide(
-                          color: Color(0xFFEC7F79),
-                          width: 2.0,
-                        )),
-                      ),
-                      style: TextStyle(color: Colors.black),
-                      validator: (val) => val.isEmpty ? 'Enter Expenses' : null,
-                      onChanged: (val) {},
-                    ),
-                    SizedBox(
-                      height: 20.0,
-                    ),
-                    Text(
-                      'Description:',
-                      style: TextStyle(
-                        color: Colors.black,
-                        fontWeight: FontWeight.bold,
-                        fontSize: 20.0,
-                      ),
-                    ),
-                    SizedBox(
-                      height: 10.0,
-                    ),
-                    TextFormField(
-                      controller: descField,
-                      decoration: InputDecoration(
-                        hintText: 'Description',
-                        fillColor: Colors.white,
-                        filled: true,
-                        enabledBorder: OutlineInputBorder(
-                            borderSide: BorderSide(
-                          color: Colors.white,
-                          width: 2.0,
-                        )),
-                        focusedBorder: OutlineInputBorder(
-                            borderSide: BorderSide(
-                          color: Color(0xFFEC7F79),
-                          width: 2.0,
-                        )),
-                      ),
-                      style: TextStyle(color: Colors.black),
-                      validator: (val) =>
-                          val.isEmpty ? 'Enter Description' : null,
-                      onChanged: (val) {},
-                    ),
-                    SizedBox(
-                      height: 30.0,
-                    ),
-                    FlatButton(
-                      child: const Icon(
-                        Icons.add_circle,
-                        color: Color(
-                          0xFFE4475B,
+  Expense expense = await showDialog(
+      context: context,
+      builder: (BuildContext context) => AlertDialog(
+            backgroundColor: Color(0xFFEC7F79),
+            content: SingleChildScrollView(
+              child: new Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  Form(
+                    child: Column(
+                      children: [
+                        Text(
+                          'Enter Expenses:',
+                          style: TextStyle(
+                            color: Colors.black,
+                            fontWeight: FontWeight.bold,
+                            fontSize: 20.0,
+                          ),
                         ),
-                        size: 50.0,
-                      ),
-                      onPressed: () {
-                        Navigator.of(context).pop(true);
-                        // expenseList.add(Expense(
-                        //     title: descField.text,
-                        //     amount: double.parse(expenseField.text),
-                        //     time: DateTime.now()));
-                        print(double.parse(expenseField.text));
-                        print(descField.text);
-                        // return Expense(
-                        //     title: descField.text,
-                        //     amount: double.parse(expenseField.text),
-                        //     time: DateTime.now());
-                        print(Expense(title: descField.text,
-                           amount: double.parse(expenseField.text),
-                          time: DateTime.now()));
-                        // adding code
-                      },
+                        SizedBox(
+                          height: 10.0,
+                        ),
+                        TextFormField(
+                          controller: expenseField,
+                          decoration: InputDecoration(
+                            hintText: 'Enter your Expenses',
+                            fillColor: Colors.white,
+                            filled: true,
+                            enabledBorder: OutlineInputBorder(
+                                borderSide: BorderSide(
+                              color: Colors.white,
+                              width: 2.0,
+                            )),
+                            focusedBorder: OutlineInputBorder(
+                                borderSide: BorderSide(
+                              color: Color(0xFFEC7F79),
+                              width: 2.0,
+                            )),
+                          ),
+                          style: TextStyle(color: Colors.black),
+                          validator: (val) =>
+                              val.isEmpty ? 'Enter Expenses' : null,
+                          onChanged: (val) {},
+                        ),
+                        SizedBox(
+                          height: 20.0,
+                        ),
+                        Text(
+                          'Description:',
+                          style: TextStyle(
+                            color: Colors.black,
+                            fontWeight: FontWeight.bold,
+                            fontSize: 20.0,
+                          ),
+                        ),
+                        SizedBox(
+                          height: 10.0,
+                        ),
+                        TextFormField(
+                          controller: descField,
+                          decoration: InputDecoration(
+                            hintText: 'Description',
+                            fillColor: Colors.white,
+                            filled: true,
+                            enabledBorder: OutlineInputBorder(
+                                borderSide: BorderSide(
+                              color: Colors.white,
+                              width: 2.0,
+                            )),
+                            focusedBorder: OutlineInputBorder(
+                                borderSide: BorderSide(
+                              color: Color(0xFFEC7F79),
+                              width: 2.0,
+                            )),
+                          ),
+                          style: TextStyle(color: Colors.black),
+                          validator: (val) =>
+                              val.isEmpty ? 'Enter Description' : null,
+                          onChanged: (val) {},
+                        ),
+                        SizedBox(
+                          height: 30.0,
+                        ),
+                        FlatButton(
+                          child: const Icon(
+                            Icons.add_circle,
+                            color: Color(
+                              0xFFE4475B,
+                            ),
+                            size: 50.0,
+                          ),
+                          onPressed: () {
+                            Navigator.pop(
+                                context,
+                                Expense(
+                                    title: descField.text,
+                                    amount: double.parse(expenseField.text),
+                                    time: DateTime.now()));
+                          },
+                        ),
+                      ],
                     ),
-                  ],
-                ),
-              )
-            ],
-          ),
-        ),
-        // actions: <Widget>[
-        //   FlatButton(
-        //     child: const Icon(Icons.add_circle, color: Color(0xFFE4475B,), size: 100.0,),
-        //     onPressed: () {
-        //       Navigator.of(context).pop(true);
-        //       // adding code
-        //     },
-        //   ),
-        // ],
-      );
-    },
-  );
-  print(Expense(title: descField.text,
-      amount: double.parse(expenseField.text),
-      time: DateTime.now()));
-  return Expense(
-      title: descField.text,
-      amount: double.parse(expenseField.text),
-      time: DateTime.now());
+                  )
+                ],
+              ),
+            ),
+            // actions: <Widget>[
+            //   FlatButton(
+            //     child: const Icon(Icons.add_circle, color: Color(0xFFE4475B,), size: 100.0,),
+            //     onPressed: () {
+            //       Navigator.of(context).pop(true);
+            //       // adding code
+            //     },
+            //   ),
+            // ],
+          ));
+  return expense;
 }

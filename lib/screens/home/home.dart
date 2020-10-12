@@ -3,7 +3,7 @@ import 'package:thrifty/screens/charts.dart';
 import 'package:thrifty/screens/expenses.dart';
 import 'package:thrifty/screens/sab.dart';
 import 'package:thrifty/services/auth.dart';
-import 'package:thrifty/routes/routes.dart';
+
 
 class Home extends StatelessWidget {
   static const String routeName = '/';

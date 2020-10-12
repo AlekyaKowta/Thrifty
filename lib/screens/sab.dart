@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:thrifty/screens/charts.dart';
 import 'package:thrifty/screens/expenses.dart';
-import 'package:thrifty/screens/home/home.dart';
 import 'package:thrifty/services/auth.dart';
 
 
@@ -51,6 +50,7 @@ class SetABudget extends StatelessWidget {
                 ),
                 onTap: () async {
                    await _auth.signOut();
+                  
                   //Navigator.pop(context);
                 },
               ),

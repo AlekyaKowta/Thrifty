@@ -1,9 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:thrifty/screens/charts.dart';
-import 'package:thrifty/screens/home/home.dart';
 import 'package:thrifty/screens/sab.dart';
-import 'package:thrifty/screens/wrapper.dart';
 import 'package:thrifty/services/auth.dart';
 import 'package:thrifty/models/expensemodel.dart';
 

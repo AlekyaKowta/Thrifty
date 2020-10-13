@@ -4,6 +4,7 @@ import 'package:thrifty/screens/charts.dart';
 import 'package:thrifty/screens/sab.dart';
 import 'package:thrifty/services/auth.dart';
 import 'package:thrifty/models/expensemodel.dart';
+import 'package:thrifty/models/user.dart';
 
 class Expenses extends StatefulWidget {
   static const String routeName = '/expenses';
@@ -16,6 +17,14 @@ class _ExpensesState extends State<Expenses> {
   final AuthService _auth = AuthService();
 
   DateTime selectedDate = DateTime.now();
+
+  User user = User();
+
+  initState() {
+    super.initState();
+    //your code
+    user.maxAmount = 2300.0;
+  }
 
   Expense expense;
 
@@ -210,6 +219,13 @@ class _ExpensesState extends State<Expenses> {
             SizedBox(
               height: 10.0,
             ),
+            Text(
+              '${calcRemaining(this.expenseList, user.maxAmount)}',
+              style: TextStyle(color: Colors.red[200], fontSize: 16.0),
+            ),
+            SizedBox(
+              height: 10.0,
+            ),
             Expanded(
               child: ListView.builder(
                 shrinkWrap: true,
@@ -340,6 +356,15 @@ double calcTotal(List<Expense> expenseList) {
     sum = sum + expenseList[i].amount;
   }
   return sum;
+}
+
+String calcRemaining(List<Expense> expenseList, double maxAmount) {
+  double remaining = calcTotal(expenseList);
+  if (maxAmount - remaining <= 300) {
+    return "Warning: Only \u20B9300 left";
+  } else {
+    return '';
+  }
 }
 
 Future<Expense> showMyDialog(

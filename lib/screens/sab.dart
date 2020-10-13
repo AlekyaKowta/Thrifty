@@ -1,13 +1,30 @@
 import 'package:flutter/material.dart';
+import 'package:thrifty/models/user.dart';
 import 'package:thrifty/screens/charts.dart';
 import 'package:thrifty/screens/expenses.dart';
 import 'package:thrifty/services/auth.dart';
 
-
-class SetABudget extends StatelessWidget {
+class SetABudget extends StatefulWidget {
   static const String routeName = '/setabudget';
+
+  @override
+  _SetABudgetState createState() => _SetABudgetState();
+}
+
+class _SetABudgetState extends State<SetABudget> {
   final AuthService _auth = AuthService();
+
   final _formKey = GlobalKey<FormState>();
+
+  final budgetField = new TextEditingController();
+
+  User user = User();
+
+  // @override
+  // void initState() {
+  //   user.maxAmount;
+  //   super.initState();
+  // }
 
   @override
   Widget build(BuildContext context) {
@@ -49,12 +66,11 @@ class SetABudget extends StatelessWidget {
                   style: TextStyle(fontSize: 20.0, color: Colors.white),
                 ),
                 onTap: () async {
-                   await _auth.signOut();
-                  
+                  await _auth.signOut();
+
                   //Navigator.pop(context);
                 },
               ),
-              
               ListTile(
                 leading: Icon(Icons.attach_money, color: Colors.white),
                 title: Text(
@@ -69,9 +85,7 @@ class SetABudget extends StatelessWidget {
                   //  Navigator.pushNamed(context, Routes.setabudget);
                   Navigator.of(context).pushReplacement(
                       MaterialPageRoute(builder: (context) => SetABudget()));
-                     
                 },
-                
               ),
               ListTile(
                 leading:
@@ -88,9 +102,7 @@ class SetABudget extends StatelessWidget {
                   // Navigator.pushNamed(context, Routes.expenses);
                   Navigator.of(context).pushReplacement(
                       MaterialPageRoute(builder: (context) => Expenses()));
-                      
                 },
-                
               ),
               ListTile(
                 leading: Icon(Icons.graphic_eq, color: Colors.white),
@@ -106,7 +118,6 @@ class SetABudget extends StatelessWidget {
                   //  Navigator.pushNamed(context, Routes.charts);
                   Navigator.of(context).pushReplacement(
                       MaterialPageRoute(builder: (context) => Charts()));
-                      
                 },
               ),
             ],
@@ -118,76 +129,90 @@ class SetABudget extends StatelessWidget {
         child: Center(
           child: Container(
             child: SingleChildScrollView(
-                child: Column(
+              child: Column(
                 children: [
-                  SizedBox(height: 10.0,),
+                  SizedBox(
+                    height: 10.0,
+                  ),
                   Text(
                     'Monthly Budget: ',
-                    style: TextStyle(color: Color(0xFFEC7F79), fontSize: 27.0, fontWeight:FontWeight.bold),
-                    ),
-                    Form(
+                    style: TextStyle(
+                        color: Color(0xFFEC7F79),
+                        fontSize: 27.0,
+                        fontWeight: FontWeight.bold),
+                  ),
+                  Form(
                     key: _formKey,
-                     child: Column(
-                       children: <Widget>[
-                         SizedBox(height: 50.0,),
-                         Container(
-                           width: 300.0,
-                           child: TextFormField(
-                             decoration: InputDecoration(
-                               hintText: 'Enter your Budget',
-                               fillColor: Colors.white,
-                               filled: true,
-                               enabledBorder: OutlineInputBorder(
-                                 borderSide: BorderSide(color: Colors.white, width:2.0,)
-                                 ),
-                                 focusedBorder: OutlineInputBorder(
-                                 borderSide: BorderSide(color: Color(0xFFEC7F79), width:2.0,)
-                                 ),
-                             ),
-                              style: TextStyle(color: Colors.black),
-                              validator: (val) => val.isEmpty ?  'Enter your Budget': null,
-                              onChanged: (val) {},
-                              // setState(() { // set state later to take input
-                              //   email= val;
-                              // });
-                           ),
-                            
-                         ),
-                          SizedBox(height: 40.0),
+                    child: Column(
+                      children: <Widget>[
+                        SizedBox(
+                          height: 50.0,
+                        ),
+                        Container(
+                          width: 300.0,
+                          child: TextFormField(
+                            controller: budgetField,
+                            decoration: InputDecoration(
+                              hintText: 'Enter your Budget',
+                              fillColor: Colors.white,
+                              filled: true,
+                              enabledBorder: OutlineInputBorder(
+                                  borderSide: BorderSide(
+                                color: Colors.white,
+                                width: 2.0,
+                              )),
+                              focusedBorder: OutlineInputBorder(
+                                  borderSide: BorderSide(
+                                color: Color(0xFFEC7F79),
+                                width: 2.0,
+                              )),
+                            ),
+                            style: TextStyle(color: Colors.black),
+                            validator: (val) =>
+                                val.isEmpty ? 'Enter your Budget' : null,
+                            onChanged: (val) {},
+                            // setState(() { // set state later to take input
+                            //   email= val;
+                            // });
+                          ),
+                        ),
+                        SizedBox(height: 40.0),
                         SizedBox(
                             height: 50.0,
                             width: 300.0,
-                           child: RaisedButton(
-                             color: Color(0xFFE4475B),
-                             child: Text(
-                                 'Submit',
-                                 style: TextStyle(
-                                     color: Colors.white,
-                                     fontSize: 18.0,
-                                 )
-                             ),
-                             onPressed: () {},
-                            //  onPressed: () async{
-                            //    if (_formKey.currentState.validate()){
-                            //      setState(() {
-                            //        loading = true;
-                            //      });
-                            //      dynamic result = await _auth.signInWithEmailAndPassword(email, password);
-                            //      if (result == null){
-                            //        setState(() {
-                            //          error = "Couldn't sign in with those credentials";
-                            //          loading = false;
-                            //        });
+                            child: RaisedButton(
+                              color: Color(0xFFE4475B),
+                              child: Text('Submit',
+                                  style: TextStyle(
+                                    color: Colors.white,
+                                    fontSize: 18.0,
+                                  )),
+                              onPressed: () {
+                                setState(() {
+                                  user.maxAmount = double.parse(budgetField.text);
+                                  
+                                });
+                                print(double.parse(budgetField.text));
+                              },
+                              //  onPressed: () async{
+                              //    if (_formKey.currentState.validate()){
+                              //      setState(() {
+                              //        loading = true;
+                              //      });
+                              //      dynamic result = await _auth.signInWithEmailAndPassword(email, password);
+                              //      if (result == null){
+                              //        setState(() {
+                              //          error = "Couldn't sign in with those credentials";
+                              //          loading = false;
+                              //        });
 
-                            //      }
-                            //    }
-                            //  },
-
-                           )
-                        ),
-                       ],
-                     ), 
+                              //      }
+                              //    }
+                              //  },
+                            )),
+                      ],
                     ),
+                  ),
                 ],
               ),
             ),

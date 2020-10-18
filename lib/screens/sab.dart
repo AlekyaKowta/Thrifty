@@ -2,7 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:thrifty/models/user.dart';
 import 'package:thrifty/screens/authenticate/sign_in.dart';
 import 'package:thrifty/screens/charts.dart';
-import 'package:thrifty/screens/expenses.dart';
+
+import 'package:thrifty/screens/home/home.dart';
 import 'package:thrifty/services/auth.dart';
 
 class SetABudget extends StatefulWidget {
@@ -73,22 +74,22 @@ class _SetABudgetState extends State<SetABudget> {
                   Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (BuildContext context) => SignIn()));
                 },
               ),
-              ListTile(
-                leading: Icon(Icons.attach_money, color: Colors.white),
-                title: Text(
-                  'Set A Budget',
-                  style: TextStyle(fontSize: 20.0, color: Colors.white),
-                ),
-                onTap: () {
-                  // Update the state of the app
-                  // ...
-                  // Then close the drawer
-                  //  Navigator.pop(context);
-                  //  Navigator.pushNamed(context, Routes.setabudget);
-                  Navigator.of(context).pushReplacement(
-                      MaterialPageRoute(builder: (context) => SetABudget()));
-                },
-              ),
+              // ListTile(
+              //   leading: Icon(Icons.attach_money, color: Colors.white),
+              //   title: Text(
+              //     'Set A Budget',
+              //     style: TextStyle(fontSize: 20.0, color: Colors.white),
+              //   ),
+              //   onTap: () {
+              //     // Update the state of the app
+              //     // ...
+              //     // Then close the drawer
+              //     //  Navigator.pop(context);
+              //     //  Navigator.pushNamed(context, Routes.setabudget);
+              //     Navigator.of(context).pushReplacement(
+              //         MaterialPageRoute(builder: (context) => SetABudget()));
+              //   },
+              // ),
               ListTile(
                 leading:
                     Icon(Icons.account_balance_wallet, color: Colors.white),
@@ -103,7 +104,7 @@ class _SetABudgetState extends State<SetABudget> {
                   // Navigator.pop(context);
                   // Navigator.pushNamed(context, Routes.expenses);
                   Navigator.of(context).pushReplacement(
-                      MaterialPageRoute(builder: (context) => Expenses()));
+                      MaterialPageRoute(builder: (context) => Home()));
                 },
               ),
               ListTile(

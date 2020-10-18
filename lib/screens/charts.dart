@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:thrifty/screens/authenticate/sign_in.dart';
-import 'package:thrifty/screens/expenses.dart';
+
+import 'package:thrifty/screens/home/home.dart';
 import 'package:thrifty/screens/sab.dart';
 import 'package:thrifty/services/auth.dart';
 
@@ -127,28 +128,28 @@ class _ChartsState extends State<Charts> {
                   // Navigator.pop(context);
                   // Navigator.pushNamed(context, Routes.expenses);
                   Navigator.of(context).pushReplacement(
-                      MaterialPageRoute(builder: (context) => Expenses()));
+                      MaterialPageRoute(builder: (context) => Home()));
                       
                 },
                 
               ),
-              ListTile(
-                leading: Icon(Icons.graphic_eq, color: Colors.white),
-                title: Text(
-                  'Charts',
-                  style: TextStyle(fontSize: 20.0, color: Colors.white),
-                ),
-                onTap: () {
-                  // Update the state of the app
-                  // ...
-                  // Then close the drawer
-                  //  Navigator.pop(context);
-                  //  Navigator.pushNamed(context, Routes.charts);
-                  Navigator.of(context).pushReplacement(
-                      MaterialPageRoute(builder: (context) => Charts()));
+              // ListTile(
+              //   leading: Icon(Icons.graphic_eq, color: Colors.white),
+              //   title: Text(
+              //     'Charts',
+              //     style: TextStyle(fontSize: 20.0, color: Colors.white),
+              //   ),
+              //   onTap: () {
+              //     // Update the state of the app
+              //     // ...
+              //     // Then close the drawer
+              //     //  Navigator.pop(context);
+              //     //  Navigator.pushNamed(context, Routes.charts);
+              //     Navigator.of(context).pushReplacement(
+              //         MaterialPageRoute(builder: (context) => Charts()));
                       
-                },
-              ),
+              //   },
+              // ),
             ],
           ),
         ),

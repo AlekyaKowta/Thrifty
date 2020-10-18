@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
+import 'package:thrifty/screens/authenticate/sign_in.dart';
 import 'package:thrifty/screens/charts.dart';
 import 'package:thrifty/screens/sab.dart';
 import 'package:thrifty/services/auth.dart';
@@ -91,7 +92,8 @@ class _ExpensesState extends State<Expenses> {
                 onTap: () async {
                   await _auth.signOut();
                   print('cool');
-                  //Navigator.pop(context);
+                  Navigator.pop(context);
+                  Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (BuildContext context) => SignIn()));
                 },
               ),
               ListTile(

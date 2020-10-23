@@ -1,3 +1,4 @@
+
 import 'package:flutter/material.dart';
 import 'package:thrifty/screens/authenticate/sign_in.dart';
 import 'package:thrifty/screens/charts.dart';
@@ -6,6 +7,7 @@ import 'package:thrifty/screens/sab.dart';
 import 'package:thrifty/services/auth.dart';
 import 'package:thrifty/models/expensemodel.dart';
 import 'package:thrifty/models/user.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 
 
 class Home extends StatefulWidget {
@@ -18,7 +20,7 @@ class Home extends StatefulWidget {
 class _HomeState extends State<Home> {
   final AuthService _auth = AuthService();
 
- DateTime selectedDate = DateTime.now();
+  DateTime selectedDate = DateTime.now();
 
   User user = User();
 
@@ -94,7 +96,8 @@ class _HomeState extends State<Home> {
                   await _auth.signOut();
                   print('cool');
                   Navigator.pop(context);
-                  Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (BuildContext context) => SignIn()));
+                  Navigator.of(context).pushReplacement(MaterialPageRoute(
+                      builder: (BuildContext context) => SignIn()));
                 },
               ),
               ListTile(

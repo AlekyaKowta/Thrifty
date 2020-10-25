@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:thrifty/screens/authenticate/sign_in.dart';
 import 'package:thrifty/screens/charts.dart';
-
+import 'package:thrifty/services/crud.dart';
 import 'package:thrifty/screens/sab.dart';
 import 'package:thrifty/services/auth.dart';
 import 'package:thrifty/models/expensemodel.dart';
@@ -21,6 +21,8 @@ class _HomeState extends State<Home> {
   DateTime selectedDate = DateTime.now();
 
   User user = User();
+
+  CrudMethods expenseListMethod;
 
   initState() {
     super.initState();
@@ -152,7 +154,11 @@ class _HomeState extends State<Home> {
                                   Expense(
                                       title: descField.text,
                                       amount: double.parse(expenseField.text),
-                                      time: DateTime.now()));
+                                      time: DateTime.now()
+                                      )
+                                      );
+                                   expenseListMethod = CrudMethods();
+                                   expenseListMethod.addExpenses(descField.text, double.parse(expenseField.text), DateTime.now());
                             },
                           ),
                         ],

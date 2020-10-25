@@ -199,9 +199,9 @@ class _SetABudgetState extends State<SetABudget> {
                                   user.maxAmount =
                                       double.parse(budgetField.text);
                                   print(user.uid);
-                                  userSetMaxMethod = CrudMethods(user.uid);
+                                  userSetMaxMethod = CrudMethods();
                                   userSetMaxMethod.addMaxAmount(
-                                      user.uid, user.maxAmount);
+                                      user.maxAmount);
                                 });
                                 print(double.parse(budgetField.text));
                                 //addMaxAmount(user.uid, user.maxAmount);

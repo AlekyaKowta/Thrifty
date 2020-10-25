@@ -6,12 +6,12 @@ import 'package:thrifty/models/user.dart';
 class CrudMethods {
   // String uid = currentUser;
   String uid;
-  // CrudMethods() {
-  //   uid = AuthService.currentUseruid;
-  // }
-  CrudMethods(String uid) {
-    this.uid = uid;
+  CrudMethods() {
+    uid = AuthService.currentUseruid;
   }
+  // CrudMethods(String uid) {
+  //   this.uid = uid;
+  // }
 
   // Future<void> useruid() {
   //   FirebaseUser user = currentUser
@@ -33,8 +33,9 @@ class CrudMethods {
     });
   }
 
-  Future<void> addMaxAmount(String uid, double maxAmount) async {
-    await databaseReference.collection("Users").document("$uid").setData({
+  Future<void> addMaxAmount(double maxAmount) async {
+    await databaseReference.collection("Users").document("$uid").updateData({
+      
       'maxAmount': '$maxAmount',
     });
   }

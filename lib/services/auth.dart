@@ -10,9 +10,10 @@ class AuthService {
   //Create user obj based on FireBase User
   User _userFromFirebaseUser(FirebaseUser user) {
     //return user != null ? User(uid: user.uid) : null;
+
     if (user != null) {
       currentUseruid = user.uid;
-      useridmethod = CrudMethods(currentUseruid);
+      useridmethod = CrudMethods();
       useridmethod.createIDRecord();
       return User(uid: user.uid);
     } else {

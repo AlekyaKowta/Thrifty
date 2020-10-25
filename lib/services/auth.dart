@@ -1,12 +1,23 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:thrifty/models/user.dart';
+import 'package:thrifty/services/crud.dart';
 
 class AuthService {
   final FirebaseAuth _auth = FirebaseAuth.instance;
+  static String currentUseruid;
+  CrudMethods useridmethod;
 
   //Create user obj based on FireBase User
   User _userFromFirebaseUser(FirebaseUser user) {
-    return user != null ? User(uid: user.uid) : null;
+    //return user != null ? User(uid: user.uid) : null;
+    if (user != null) {
+      currentUseruid = user.uid;
+      useridmethod = CrudMethods(currentUseruid);
+      useridmethod.createIDRecord();
+      return User(uid: user.uid);
+    } else {
+      return null;
+    }
   }
 
   // Auth change user stream
@@ -22,6 +33,7 @@ class AuthService {
     try {
       AuthResult result = await _auth.signInAnonymously();
       FirebaseUser user = result.user;
+      //print(user);
       return _userFromFirebaseUser(user);
     } catch (e) {
       print(e.toString());
@@ -36,6 +48,7 @@ class AuthService {
           email: email, password: password);
       FirebaseUser user = result.user;
       print(result.user);
+
       return _userFromFirebaseUser(user);
     } catch (e) {
       print(e.toString());

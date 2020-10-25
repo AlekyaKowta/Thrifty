@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:thrifty/models/user.dart';
 import 'package:thrifty/screens/authenticate/sign_in.dart';
 import 'package:thrifty/screens/charts.dart';
+import 'package:thrifty/services/crud.dart';
 
 import 'package:thrifty/screens/home/home.dart';
 import 'package:thrifty/services/auth.dart';
@@ -21,6 +22,8 @@ class _SetABudgetState extends State<SetABudget> {
   final budgetField = new TextEditingController();
 
   User user = User();
+
+  CrudMethods userSetMaxMethod;
 
   // @override
   // void initState() {
@@ -71,7 +74,8 @@ class _SetABudgetState extends State<SetABudget> {
                   await _auth.signOut();
 
                   Navigator.pop(context);
-                  Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (BuildContext context) => SignIn()));
+                  Navigator.of(context).pushReplacement(MaterialPageRoute(
+                      builder: (BuildContext context) => SignIn()));
                 },
               ),
               // ListTile(
@@ -192,26 +196,16 @@ class _SetABudgetState extends State<SetABudget> {
                                   )),
                               onPressed: () {
                                 setState(() {
-                                  user.maxAmount = double.parse(budgetField.text);
-                                  
+                                  user.maxAmount =
+                                      double.parse(budgetField.text);
+                                  print(user.uid);
+                                  userSetMaxMethod = CrudMethods(user.uid);
+                                  userSetMaxMethod.addMaxAmount(
+                                      user.uid, user.maxAmount);
                                 });
                                 print(double.parse(budgetField.text));
+                                //addMaxAmount(user.uid, user.maxAmount);
                               },
-                              //  onPressed: () async{
-                              //    if (_formKey.currentState.validate()){
-                              //      setState(() {
-                              //        loading = true;
-                              //      });
-                              //      dynamic result = await _auth.signInWithEmailAndPassword(email, password);
-                              //      if (result == null){
-                              //        setState(() {
-                              //          error = "Couldn't sign in with those credentials";
-                              //          loading = false;
-                              //        });
-
-                              //      }
-                              //    }
-                              //  },
                             )),
                       ],
                     ),

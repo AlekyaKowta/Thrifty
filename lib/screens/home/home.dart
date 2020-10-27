@@ -1,12 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:thrifty/screens/authenticate/sign_in.dart';
 import 'package:thrifty/screens/charts.dart';
+import 'package:thrifty/screens/expenses.dart';
 import 'package:thrifty/services/crud.dart';
 import 'package:thrifty/screens/sab.dart';
 import 'package:thrifty/services/auth.dart';
 import 'package:thrifty/models/expensemodel.dart';
 import 'package:thrifty/models/user.dart';
-import 'package:cloud_firestore/cloud_firestore.dart';
 
 class Home extends StatefulWidget {
   static const String routeName = '/';
@@ -17,6 +17,8 @@ class Home extends StatefulWidget {
 
 class _HomeState extends State<Home> {
   final AuthService _auth = AuthService();
+  double total;
+  String warning;
 
   DateTime selectedDate = DateTime.now();
 
@@ -28,6 +30,31 @@ class _HomeState extends State<Home> {
     super.initState();
     //your code
     user.maxAmount = 2300.0;
+    expenseListMethod = CrudMethods();
+    calcTotal();
+    calcRemaining();
+
+  }
+
+  Future<void> calcTotal() async {
+    total = await expenseListMethod.getTotal();
+    setState(() {
+      
+    });
+  }
+
+  Future<void> calcRemaining() async {
+    double max = await expenseListMethod.getMax();
+    if (max - total <= 500) {
+      warning = "Warning! You're reaching your limit";
+    } else if (max - total == 0) {
+      warning = "You've reached your limit, set a new budget";
+    } else {
+      warning = '';
+    }
+    setState(() {
+      
+    });
   }
 
   Expense expense;
@@ -154,11 +181,12 @@ class _HomeState extends State<Home> {
                                   Expense(
                                       title: descField.text,
                                       amount: double.parse(expenseField.text),
-                                      time: DateTime.now()
-                                      )
-                                      );
-                                   expenseListMethod = CrudMethods();
-                                   expenseListMethod.addExpenses(descField.text, double.parse(expenseField.text), DateTime.now());
+                                      time: DateTime.now()));
+                              expenseListMethod = CrudMethods();
+                              expenseListMethod.addExpenses(
+                                  descField.text,
+                                  double.parse(expenseField.text),
+                                  DateTime.now());
                             },
                           ),
                         ],
@@ -342,8 +370,7 @@ class _HomeState extends State<Home> {
                   borderRadius: BorderRadius.all(
                     Radius.circular(5.0),
                   )),
-              child: Text(
-                  "Total: ${calcTotal(this.expenseList).toStringAsFixed(2)} ",
+              child: Text("Total: $total",
                   style: TextStyle(
                     color: Color(0xFFEC7F79),
                     fontSize: 25.0,
@@ -353,20 +380,36 @@ class _HomeState extends State<Home> {
               height: 10.0,
             ),
             Text(
-              '${calcRemaining(this.expenseList, user.maxAmount)}',
+              '$warning',
               style: TextStyle(color: Colors.red[200], fontSize: 16.0),
             ),
             SizedBox(
               height: 10.0,
             ),
             Expanded(
-              child: ListView.builder(
-                shrinkWrap: true,
-                itemCount: expenseList.length,
-                itemBuilder: (BuildContext context, int index) {
-                  return buildExpenseCard(context, index);
-                },
-              ),
+              child: FutureBuilder(
+                  future: expenseListMethod.fetchMessages(),
+                  builder: (context, snapshot) {
+                    if (snapshot.connectionState == ConnectionState.waiting) {
+                      return Center(child: CircularProgressIndicator());
+                    }
+                    return RefreshIndicator(
+                      onRefresh: () async {
+                        setState(() {});
+                      },
+                      child: ListView.builder(
+                        shrinkWrap: true,
+                        itemCount: snapshot.data.length,
+                        itemBuilder: (BuildContext context, int index) {
+                          return buildExpenseCard(
+                              context,
+                              index,
+                              snapshot.data[index]['title'],
+                              snapshot.data[index]['amount']);
+                        },
+                      ),
+                    );
+                  }),
             ),
           ],
         ),
@@ -374,8 +417,12 @@ class _HomeState extends State<Home> {
     );
   }
 
-  Widget buildExpenseCard(BuildContext context, int index) {
-    final expenseL = expenseList[index];
+
+
+  Widget buildExpenseCard(
+      BuildContext context, int index, String title, double amount) {
+    //final expenseL = expenseList[index];
+
     if (index % 2 == 0) {
       return Container(
         child: Column(
@@ -390,9 +437,9 @@ class _HomeState extends State<Home> {
                 children: <Widget>[
                   ListTile(
                     leading: Icon(Icons.account_balance_wallet, size: 50),
-                    title: Text(expenseL.title,
+                    title: Text(title,
                         style: TextStyle(fontWeight: FontWeight.bold)),
-                    subtitle: Text(expenseL.amount.toStringAsFixed(2),
+                    subtitle: Text(amount.toStringAsFixed(2),
                         style: TextStyle(fontWeight: FontWeight.bold)),
                     trailing: Row(
                       mainAxisSize: MainAxisSize.min,
@@ -436,9 +483,9 @@ class _HomeState extends State<Home> {
                 children: <Widget>[
                   ListTile(
                     leading: Icon(Icons.account_balance, size: 50),
-                    title: Text(expenseL.title,
+                    title: Text(title,
                         style: TextStyle(fontWeight: FontWeight.bold)),
-                    subtitle: Text(expenseL.amount.toStringAsFixed(2),
+                    subtitle: Text(amount.toStringAsFixed(2),
                         style: TextStyle(fontWeight: FontWeight.bold)),
                     trailing: Row(
                       mainAxisSize: MainAxisSize.min,
@@ -472,31 +519,4 @@ class _HomeState extends State<Home> {
   }
 }
 
-// class NewCard extends StatelessWidget {
-//   final int index;
 
-//   const NewCard({Key key, this.index}) : super(key: key);
-//   @override
-//   Widget build(BuildContext context) {
-//     return Container();
-//   }
-// }
-
-double calcTotal(List<Expense> expenseList) {
-  int i;
-  double sum = 0;
-  for (i = 0; i < expenseList.length; i++) {
-    sum = sum + expenseList[i].amount;
-  }
-  return sum;
-}
-
-String calcRemaining(List<Expense> expenseList, double maxAmount) {
-  double remaining = calcTotal(expenseList);
-  if (maxAmount - remaining <= 300) {
-    // return "Warning: Only \u20B9300 left";
-    return "Warning: You're reaching your limit";
-  } else {
-    return '';
-  }
-}

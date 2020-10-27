@@ -29,15 +29,15 @@ class CrudMethods {
   }
 
   Future<void> createIDRecord() async {
-    await databaseReference.collection("Users").document("$uid").updateData({
+    await databaseReference.collection("Users").document("$uid").setData({
       'id': '$uid',
-    });
+    }, merge: true);
   }
 
   Future<void> addMaxAmount(double maxAmount) async {
-    await databaseReference.collection("Users").document("$uid").updateData({
+    await databaseReference.collection("Users").document("$uid").setData({
       'maxAmount': maxAmount,
-    });
+    }, merge: true);
   }
 
   Future<void> addExpenses(String title, double amount, DateTime time) async {
@@ -69,7 +69,7 @@ class CrudMethods {
 
   Future<double> getTotal() async {
     //time of gettingcurrentuser error
-    double total = 0;
+    var total = 0.0;
     final QuerySnapshot result = await Firestore.instance
         .collection('Users')
         .document('$uid')
@@ -79,19 +79,19 @@ class CrudMethods {
     documents.forEach((data) {
       total = total + data['amount'];
     });
-    return total;
+    return double.parse('$total');
   }
 
-  Future<double> getMax() async {
+  Future getMax() async {
     //time of gettingcurrentuser error
-    
+
     final maxAmount = await Firestore.instance
         .collection('Users')
         .document('$uid')
-        .get().then((value) => value.data['maxAmount']);
-    
+        .get()
+        .then((value) => value.data['maxAmount']);
+
+    print('===========' + maxAmount);
     return maxAmount;
   }
-
-  
 }

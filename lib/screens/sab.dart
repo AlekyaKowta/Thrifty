@@ -159,6 +159,7 @@ class _SetABudgetState extends State<SetABudget> {
                           width: 300.0,
                           child: TextFormField(
                             controller: budgetField,
+                            keyboardType: TextInputType.number,
                             decoration: InputDecoration(
                               hintText: 'Enter your Budget',
                               fillColor: Colors.white,
@@ -200,8 +201,7 @@ class _SetABudgetState extends State<SetABudget> {
                                       double.parse(budgetField.text);
                                   print(user.uid);
                                   userSetMaxMethod = CrudMethods();
-                                  userSetMaxMethod.addMaxAmount(
-                                      user.maxAmount);
+                                  userSetMaxMethod.addMaxAmount(user.maxAmount);
                                 });
                                 print(double.parse(budgetField.text));
                                 //addMaxAmount(user.uid, user.maxAmount);

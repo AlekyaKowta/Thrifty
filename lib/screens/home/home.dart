@@ -18,8 +18,8 @@ class Home extends StatefulWidget {
 class _HomeState extends State<Home> {
   final AuthService _auth = AuthService();
   double total;
-  String warning;
-
+  // String warning;
+  var getMax;
   DateTime selectedDate = DateTime.now();
 
   User user = User();
@@ -33,28 +33,27 @@ class _HomeState extends State<Home> {
     expenseListMethod = CrudMethods();
     calcTotal();
     calcRemaining();
-
   }
 
   Future<void> calcTotal() async {
     total = await expenseListMethod.getTotal();
-    setState(() {
-      
-    });
+    getMax = await expenseListMethod.getMax();
+    setState(() {});
   }
 
-  Future<void> calcRemaining() async {
-    double max = await expenseListMethod.getMax();
-    if (max - total <= 500) {
-      warning = "Warning! You're reaching your limit";
-    } else if (max - total == 0) {
-      warning = "You've reached your limit, set a new budget";
-    } else {
-      warning = '';
-    }
-    setState(() {
-      
-    });
+  String calcRemaining() {
+    if (total != null && getMax != null) {
+      double max = double.parse(getMax);
+
+      if (max - total <= 500.0) {
+        return "Warning! You're reaching your limit";
+      } else if (max - total == 0.0) {
+        return "You've reached your limit, set a new budget";
+      } else {
+        return '';
+      }
+    } else
+      return '';
   }
 
   Expense expense;
@@ -267,7 +266,7 @@ class _HomeState extends State<Home> {
                   // Then close the drawer
                   //  Navigator.pop(context);
                   //  Navigator.pushNamed(context, Routes.setabudget);
-                  Navigator.of(context).pushReplacement(
+                  Navigator.of(context).push(
                       MaterialPageRoute(builder: (context) => SetABudget()));
                 },
               ),
@@ -300,8 +299,8 @@ class _HomeState extends State<Home> {
                   // Then close the drawer
                   //  Navigator.pop(context);
                   //  Navigator.pushNamed(context, Routes.charts);
-                  Navigator.of(context).pushReplacement(
-                      MaterialPageRoute(builder: (context) => Charts()));
+                  Navigator.of(context)
+                      .push(MaterialPageRoute(builder: (context) => Charts()));
                 },
               ),
             ],
@@ -380,7 +379,7 @@ class _HomeState extends State<Home> {
               height: 10.0,
             ),
             Text(
-              '$warning',
+              calcRemaining(),
               style: TextStyle(color: Colors.red[200], fontSize: 16.0),
             ),
             SizedBox(
@@ -416,8 +415,6 @@ class _HomeState extends State<Home> {
       ),
     );
   }
-
-
 
   Widget buildExpenseCard(
       BuildContext context, int index, String title, double amount) {
@@ -518,5 +515,3 @@ class _HomeState extends State<Home> {
     }
   }
 }
-
-

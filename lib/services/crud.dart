@@ -67,31 +67,64 @@ class CrudMethods {
     return documents;
   }
 
+  // fetchData() {
+  //   var data;
+  //   CollectionReference collectionReference =
+  //       Firestore.instance.collection("Users");
+  //   collectionReference
+  //       .document('$uid')
+  //       .collection("expenses")
+  //       .orderBy('time', descending: true)
+  //       .snapshots()
+  //       .listen((event) {
+  //        data = event.documents[];
+  //       });
+  // }
+
   Future<double> getTotal() async {
     //time of gettingcurrentuser error
-    var total = 0.0;
+    double total = 0.0;
     final QuerySnapshot result = await Firestore.instance
         .collection('Users')
         .document('$uid')
         .collection('expenses')
         .getDocuments();
     final List<DocumentSnapshot> documents = result.documents;
+    //print(documents);
+
     documents.forEach((data) {
       total = total + data['amount'];
     });
-    return double.parse('$total');
+    //print(total);
+    return total;
   }
 
-  Future getMax() async {
+  Future<double> getMax() async {
     //time of gettingcurrentuser error
 
-    final maxAmount = await Firestore.instance
+    double maxAmount;
+    final temp =
+        await Firestore.instance.collection('Users').document('$uid').get();
+    //.then((value) => value.data['maxAmount']);
+    maxAmount = temp.data['maxAmount'].toDouble();
+
+    print(maxAmount);
+
+    return maxAmount;
+  }
+
+  Future<void> deleteMessage(String sentAt) async {
+    print(sentAt);
+    await Firestore.instance
         .collection('Users')
         .document('$uid')
-        .get()
-        .then((value) => value.data['maxAmount']);
-
-    print('===========' + maxAmount);
-    return maxAmount;
+        .collection('expenses')
+        .where('time', isEqualTo: sentAt)
+        .getDocuments()
+        .then((value) {
+      for (DocumentSnapshot ds in value.documents) {
+        ds.reference.delete();
+      }
+    });
   }
 }

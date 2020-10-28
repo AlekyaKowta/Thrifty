@@ -29,7 +29,7 @@ class _HomeState extends State<Home> {
   initState() {
     super.initState();
     //your code
-    user.maxAmount = 2300.0;
+    //user.maxAmount = 2300.0;
     expenseListMethod = CrudMethods();
     calcTotal();
     calcRemaining();
@@ -38,22 +38,28 @@ class _HomeState extends State<Home> {
   Future<void> calcTotal() async {
     total = await expenseListMethod.getTotal();
     getMax = await expenseListMethod.getMax();
+
+    print(total);
     setState(() {});
   }
 
   String calcRemaining() {
+    String warning = '';
     if (total != null && getMax != null) {
-      double max = double.parse(getMax);
+      double max = getMax;
 
       if (max - total <= 500.0) {
-        return "Warning! You're reaching your limit";
+        warning = "Warning! You're reaching your limit";
       } else if (max - total == 0.0) {
-        return "You've reached your limit, set a new budget";
+        warning = "You've reached your limit, set a new budget";
       } else {
-        return '';
+        warning = '';
       }
-    } else
-      return '';
+    } else {
+      warning = '';
+    }
+    setState(() {});
+    return warning;
   }
 
   Expense expense;
@@ -181,11 +187,14 @@ class _HomeState extends State<Home> {
                                       title: descField.text,
                                       amount: double.parse(expenseField.text),
                                       time: DateTime.now()));
-                              expenseListMethod = CrudMethods();
-                              expenseListMethod.addExpenses(
-                                  descField.text,
-                                  double.parse(expenseField.text),
-                                  DateTime.now());
+                              setState(() {
+                                expenseListMethod = CrudMethods();
+                                expenseListMethod.addExpenses(
+                                    descField.text,
+                                    double.parse(expenseField.text),
+                                    DateTime.now());
+                                calcTotal();
+                              });
                             },
                           ),
                         ],
@@ -369,7 +378,7 @@ class _HomeState extends State<Home> {
                   borderRadius: BorderRadius.all(
                     Radius.circular(5.0),
                   )),
-              child: Text("Total: $total",
+              child: Text("Total: $total".toString(),
                   style: TextStyle(
                     color: Color(0xFFEC7F79),
                     fontSize: 25.0,
@@ -404,7 +413,8 @@ class _HomeState extends State<Home> {
                               context,
                               index,
                               snapshot.data[index]['title'],
-                              snapshot.data[index]['amount']);
+                              snapshot.data[index]['amount'],
+                              snapshot.data[index]['time']);
                         },
                       ),
                     );
@@ -416,8 +426,8 @@ class _HomeState extends State<Home> {
     );
   }
 
-  Widget buildExpenseCard(
-      BuildContext context, int index, String title, double amount) {
+  Widget buildExpenseCard(BuildContext context, int index, String title,
+      double amount, dynamic time) {
     //final expenseL = expenseList[index];
 
     if (index % 2 == 0) {
@@ -455,7 +465,15 @@ class _HomeState extends State<Home> {
                             size: 20.0,
                             color: Colors.black,
                           ),
-                          onPressed: () {},
+                          onPressed: () async {
+                            //setState(() async{
+                             await expenseListMethod.deleteMessage(time);
+                           // });
+                            setState(() {
+                              
+                            });
+                            // expenseListMethod.deleteMessage(time);
+                          },
                         ),
                       ],
                     ),

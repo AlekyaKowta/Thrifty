@@ -53,6 +53,26 @@ class CrudMethods {
     });
   }
 
+  Future<void> editExpenses(
+      String title, double amount, DateTime time, int index) async {
+    final result = await databaseReference
+        .collection("Users")
+        .document("$uid")
+        .collection("expenses")
+        .getDocuments();
+
+    final result1 = result.documents.removeAt(index);
+
+    await result1.reference.setData(
+      {
+      'title': '$title',
+      'amount': amount,
+      'time': '$time',
+    }
+    );
+
+  }
+
   Future<List<DocumentSnapshot>> fetchMessages() async {
     //time of gettingcurrentuser error
 
@@ -106,7 +126,11 @@ class CrudMethods {
     final temp =
         await Firestore.instance.collection('Users').document('$uid').get();
     //.then((value) => value.data['maxAmount']);
-    maxAmount = temp.data['maxAmount'].toDouble();
+    if (temp.data['maxAmount'] == null) {
+      maxAmount = 0.0;
+    } else {
+      maxAmount = temp.data['maxAmount'].toDouble();
+    }
 
     print(maxAmount);
 

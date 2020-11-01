@@ -135,7 +135,6 @@ class _SignInState extends State<SignIn> {
                                       });
 
                                       /// check is there is a user and navigate to the home page
-
                                       var result = await _auth
                                           .signInWithEmailAndPassword(
                                               email, password);

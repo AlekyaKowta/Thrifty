@@ -49,7 +49,7 @@ class AuthService {
     FirebaseUser user = result.user;
     print(result.user);
 
-    return _userFromFirebaseUser(user);
+    return user != null ? _userFromFirebaseUser(user) : null;
   }
 
   // Register with Email and Pass
@@ -59,7 +59,7 @@ class AuthService {
     AuthResult result = await _auth.createUserWithEmailAndPassword(
         email: email, password: password);
     FirebaseUser user = result.user;
-    return _userFromFirebaseUser(user);
+    return user != null ? _userFromFirebaseUser(user) : null;
   }
 
   // Sign Out

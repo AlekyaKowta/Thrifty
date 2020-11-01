@@ -1,8 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:thrifty/services/auth.dart';
-import 'package:thrifty/models/user.dart';
-import 'package:thrifty/models/expensemodel.dart';
 
 class CrudMethods {
   // String uid = currentUser;
@@ -63,14 +61,11 @@ class CrudMethods {
 
     final result1 = result.documents.removeAt(index);
 
-    await result1.reference.setData(
-      {
+    await result1.reference.setData({
       'title': '$title',
       'amount': amount,
       'time': '$time',
-    }
-    );
-
+    });
   }
 
   Future<List<DocumentSnapshot>> fetchMessages() async {

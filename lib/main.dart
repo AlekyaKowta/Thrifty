@@ -6,9 +6,10 @@ import 'package:provider/provider.dart';
 import 'package:thrifty/services/auth.dart';
 import 'package:thrifty/models/user.dart';
 
-
 void main() {
-  runApp(MyApp(),);
+  runApp(
+    MyApp(),
+  );
 }
 
 class MyApp extends StatelessWidget {

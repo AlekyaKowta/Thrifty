@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:thrifty/models/user.dart';
+import 'package:thrifty/screens/home/home.dart';
 import 'package:thrifty/services/auth.dart';
 import 'package:thrifty/shared/loading.dart';
 
@@ -128,19 +130,40 @@ class _RegisterState extends State<Register> {
                                       fontSize: 18.0,
                                     )),
                                 onPressed: () async {
-                                  if (_formKey.currentState.validate()) {
-                                    setState(() {
-                                      loading = true;
-                                    });
-                                    dynamic result = await _auth
-                                        .registerWithEmailAndPassword(
-                                            email, password);
-                                    if (result == null) {
+                                  try {
+                                    if (_formKey.currentState.validate()) {
                                       setState(() {
-                                        error = "Please type a Valid Email";
-                                        loading = false;
+                                        loading = true;
                                       });
+                                      var result = await _auth
+                                          .registerWithEmailAndPassword(
+                                              email, password);
+
+                                      /// check is there is a user and navigate to the home page
+                                      if (result is User) {
+                                        /// this will remove all pages and push the [Home()] on top
+                                        Navigator.of(context)
+                                            .pushAndRemoveUntil(
+                                          MaterialPageRoute(
+                                            builder: (context) => Home(),
+                                          ),
+                                          (route) => false,
+                                        );
+                                      } else {
+                                        /// else report an error
+                                        setState(() {
+                                          error = "Please try again";
+                                        });
+                                      }
                                     }
+                                  } catch (e) {
+                                    setState(() {
+                                      error = e.message;
+                                    });
+                                  } finally {
+                                    setState(() {
+                                      loading = false;
+                                    });
                                   }
                                 },
                               )),

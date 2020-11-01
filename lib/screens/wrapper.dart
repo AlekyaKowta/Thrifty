@@ -9,10 +9,10 @@ import 'package:provider/provider.dart';
 class Wrapper extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    // // final user = Provider.of<User>(context);
-    // // print(user);
+    //// final user = Provider.of<User>(context);
+    //// print(user);
 
-    // // Return Home or Authenticate
+    //// Return Home or Authenticate
     // if (user == null) {
     //   print('yes');
     //   return Authenticate();
@@ -21,17 +21,21 @@ class Wrapper extends StatelessWidget {
     //   return Home();
     // }
 
-    return StreamBuilder(
+    return StreamBuilder<FirebaseUser>(
         stream: FirebaseAuth.instance.onAuthStateChanged,
         builder: (context, snapshot) {
-          final user = Provider.of<User>(context);
-          if (snapshot.connectionState == ConnectionState.waiting) {
-            return Loading();
-          }
-          if (snapshot.hasData) {
+          // final user = Provider.of<User>(context);
+          // if (snapshot.connectionState == ConnectionState.waiting) {
+          //   return Loading();
+          // } else
+
+          if (snapshot.data is FirebaseUser) {
             return Home();
+          } else {
+            return Authenticate();
           }
-          return Authenticate();
+
+          // return Authenticate();
         });
   }
 }

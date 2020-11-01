@@ -392,8 +392,11 @@ class _HomeState extends State<Home> {
                   await _auth.signOut();
                   print('cool');
                   Navigator.pop(context);
-                  Navigator.of(context).pushReplacement(MaterialPageRoute(
-                      builder: (BuildContext context) => SignIn()));
+                  Navigator.of(context).pushReplacement(
+                    MaterialPageRoute(
+                      builder: (BuildContext context) => SignIn(),
+                    ),
+                  );
                 },
               ),
               ListTile(
@@ -544,11 +547,12 @@ class _HomeState extends State<Home> {
                         itemCount: snapshot.data.length,
                         itemBuilder: (BuildContext context, int index) {
                           return buildExpenseCard(
-                              context,
-                              index,
-                              snapshot.data[index]['title'],
-                              snapshot.data[index]['amount'],
-                              snapshot.data[index]['time']);
+                            context,
+                            index,
+                            snapshot.data[index]['title'],
+                            snapshot.data[index]['amount'],
+                            snapshot.data[index]['time'],
+                          );
                         },
                       ),
                     );

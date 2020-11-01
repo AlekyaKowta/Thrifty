@@ -8,20 +8,38 @@ class Authenticate extends StatefulWidget {
 }
 
 class _AuthenticateState extends State<Authenticate> {
-
   bool showSignIn = true;
 
   void toggleView() {
     setState(() => showSignIn = !showSignIn);
   }
 
-
   @override
   Widget build(BuildContext context) {
-   if (showSignIn){
-     return SignIn(toggleView: toggleView); // passing this tv function to signin
-   } else{
-     return Register(toggleView: toggleView);
-   }
+    return Scaffold(
+        backgroundColor: Color(0xFF3B3E4D),
+        appBar: AppBar(
+          backgroundColor: Colors.black45,
+          elevation: 0.0,
+          //title: Text('Sign In'),
+          actions: <Widget>[
+            FlatButton.icon(
+              onPressed: () {
+                toggleView();
+              },
+              icon: Icon(
+                Icons.people,
+                color: Colors.white54,
+              ),
+              label: Text('Register',
+                  style: TextStyle(color: Colors.white54, fontSize: 20.0)),
+            )
+          ],
+        ),
+        body: showSignIn
+            ? SignIn(
+                toggleView: toggleView) // passing this tv function to signin
+
+            : Register(toggleView: toggleView));
   }
 }

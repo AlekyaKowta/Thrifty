@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:thrifty/screens/authenticate/authenticate.dart';
 import 'package:thrifty/screens/authenticate/sign_in.dart';
 import 'package:thrifty/screens/charts.dart';
 
@@ -394,7 +395,7 @@ class _HomeState extends State<Home> {
                   Navigator.pop(context);
                   Navigator.of(context).pushReplacement(
                     MaterialPageRoute(
-                      builder: (BuildContext context) => SignIn(),
+                      builder: (BuildContext context) => Authenticate(),
                     ),
                   );
                 },

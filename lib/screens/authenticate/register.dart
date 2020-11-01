@@ -27,27 +27,9 @@ class _RegisterState extends State<Register> {
   Widget build(BuildContext context) {
     return loading
         ? Loading()
-        : Scaffold(
-            backgroundColor: Color(0xFF3B3E4D),
-            appBar: AppBar(
-              backgroundColor: Colors.black45,
-              elevation: 0.0,
-              //title: Text('Sign In'),
-              actions: <Widget>[
-                FlatButton.icon(
-                  onPressed: () {
-                    widget.toggleView();
-                  },
-                  icon: Icon(
-                    Icons.people,
-                    color: Colors.white54,
-                  ),
-                  label: Text('Sign In',
-                      style: TextStyle(color: Colors.white54, fontSize: 20.0)),
-                )
-              ],
-            ),
-            body: SingleChildScrollView(
+        : Container(
+            color: Color(0xFF3B3E4D),
+            child: SingleChildScrollView(
               child: Container(
                 padding: EdgeInsets.symmetric(vertical: 20.0, horizontal: 50.0),
                 child: Column(

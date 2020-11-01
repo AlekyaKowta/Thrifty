@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:thrifty/models/user.dart';
+import 'package:thrifty/screens/authenticate/authenticate.dart';
 import 'package:thrifty/screens/authenticate/sign_in.dart';
 import 'package:thrifty/screens/charts.dart';
 import 'package:thrifty/services/crud.dart';
@@ -75,7 +76,7 @@ class _SetABudgetState extends State<SetABudget> {
 
                   Navigator.pop(context);
                   Navigator.of(context).pushReplacement(MaterialPageRoute(
-                      builder: (BuildContext context) => SignIn()));
+                      builder: (BuildContext context) => Authenticate()));
                 },
               ),
               // ListTile(

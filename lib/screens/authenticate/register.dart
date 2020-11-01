@@ -164,20 +164,20 @@ class _RegisterState extends State<Register> {
   }
 }
 
-//         appBar: AppBar(
-//             backgroundColor: Colors.brown[400],
-//             elevation: 0.0,
-//             title: Text('Register'),
-//           actions: <Widget>[
-//               FlatButton.icon(
-//                 onPressed: (){
-//                   widget.toggleView();
-//                 },
-//                 icon: Icon(Icons.people),
-//                 label: Text('Sign In'),
-//               )
-//             ],
-//         ),
+        // appBar: AppBar(
+        //     backgroundColor: Colors.brown[400],
+        //     elevation: 0.0,
+        //     title: Text('Register'),
+        //   actions: <Widget>[
+        //       FlatButton.icon(
+        //         onPressed: (){
+        //           widget.toggleView();
+        //         },
+        //         icon: Icon(Icons.people),
+        //         label: Text('Sign In'),
+        //       )
+        //     ],
+        // ),
 //         body: Container(
 //           padding: EdgeInsets.symmetric(vertical: 20.0,horizontal: 50.0),
 //           child: Form(

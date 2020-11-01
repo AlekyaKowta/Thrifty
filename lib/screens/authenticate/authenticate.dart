@@ -31,8 +31,9 @@ class _AuthenticateState extends State<Authenticate> {
                 Icons.people,
                 color: Colors.white54,
               ),
-              label: Text('Register',
-                  style: TextStyle(color: Colors.white54, fontSize: 20.0)),
+              label: showSignIn ?  Text('Register',
+                  style: TextStyle(color: Colors.white54, fontSize: 20.0)) : Text('Sign In',
+                  style: TextStyle(color: Colors.white54, fontSize: 20.0))
             )
           ],
         ),

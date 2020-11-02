@@ -21,7 +21,7 @@ class _ChartsState extends State<Charts> {
 
   DateTime selectedDate = DateTime.now();
 
-  List<double> data = [];
+  List<double> fdata = [-2.0, 3.0, 6.0, 3.0, -2.0, 4.0,3.0];
 
   _selectDate(BuildContext context) async {
     final DateTime picked = await showDatePicker(
@@ -35,16 +35,6 @@ class _ChartsState extends State<Charts> {
         selectedDate = picked;
       });
 
-    // CrudMethods chartsMethod;
-
-    //   Future<void> chartsData() async {
-    //   data = await chartsMethod.chartData();
-
-    //   //orElse: () => null
-    //   setState(() {
-    //     print(data);
-    //   });
-    // }
 
     @override
     initState() {
@@ -53,28 +43,22 @@ class _ChartsState extends State<Charts> {
       chartsMethod = CrudMethods();
       chartsData();
 
-      //data = await chartsMethod.chartData();
-      // List<double> doubleData = data.map((s) => s as double).toList();
-      // data = data.map((s) => s as double).ToList();
-      // data= data.cast<double>();
-      // List<double> fdata = new List<double>.from(data.whereType<double>());
     }
 
-    // List<double> doubleData;
   }
 
   CrudMethods chartsMethod;
 
   Future<void> chartsData() async {
-    data = await chartsMethod.chartData();
+    fdata = await chartsMethod.chartData();
     setState(() {
-      print(data);
+      print(fdata);
     });
   }
 
   @override
   Widget build(BuildContext context) {
-    data = data != null ? data : Loading();
+   //data = data != null ? data : [0.0, 1.0, -3.0, 4.0, 5.0];
     return Scaffold(
       backgroundColor: Color(0xFF3B3E4D),
       appBar: AppBar(
@@ -88,7 +72,7 @@ class _ChartsState extends State<Charts> {
       ),
       endDrawer: Theme(
         data: Theme.of(context).copyWith(
-          // canvasColor:Color(0xFF3B3E4D), //otherstyles
+         
           canvasColor: Color(0xFFE4475B),
         ),
         child: Drawer(
@@ -96,7 +80,7 @@ class _ChartsState extends State<Charts> {
             padding: EdgeInsets.zero,
             children: <Widget>[
               DrawerHeader(
-                //child: Text('Drawer Header'),
+               
                 child: Image.asset(
                   'assets/thrifty.png',
                   height: 50.0,
@@ -119,24 +103,7 @@ class _ChartsState extends State<Charts> {
                       builder: (BuildContext context) => Authenticate()));
                 },
               ),
-              // ListTile(
-              //   leading: Icon(Icons.home, color: Colors.white),
-              //   title: Text(
-              //     'Home',
-              //     style: TextStyle(fontSize: 20.0, color: Colors.white),
-              //   ),
-              //   onTap: () {
-              //     // Update the state of the app
-              //     // ...
-              //     // Then close the drawer
-              //     //  Navigator.pop(context);
-              //     //  Navigator.pushNamed(context, Routes.setabudget);
-              //     Navigator.of(context).pushReplacement(
-              //         MaterialPageRoute(builder: (context) => Home()));
-
-              //   },
-
-              // ),
+            
               ListTile(
                 leading: Icon(Icons.attach_money, color: Colors.white),
                 title: Text(
@@ -144,11 +111,7 @@ class _ChartsState extends State<Charts> {
                   style: TextStyle(fontSize: 20.0, color: Colors.white),
                 ),
                 onTap: () {
-                  // Update the state of the app
-                  // ...
-                  // Then close the drawer
-                  //  Navigator.pop(context);
-                  //  Navigator.pushNamed(context, Routes.setabudget);
+                
                   Navigator.of(context).pushReplacement(
                       MaterialPageRoute(builder: (context) => SetABudget()));
                 },
@@ -161,32 +124,12 @@ class _ChartsState extends State<Charts> {
                   style: TextStyle(fontSize: 20.0, color: Colors.white),
                 ),
                 onTap: () {
-                  // Update the state of the app
-                  // ...
-                  // Then close the drawer
-                  // Navigator.pop(context);
-                  // Navigator.pushNamed(context, Routes.expenses);
+               
                   Navigator.of(context).pushReplacement(
                       MaterialPageRoute(builder: (context) => Home()));
                 },
               ),
-              // ListTile(
-              //   leading: Icon(Icons.graphic_eq, color: Colors.white),
-              //   title: Text(
-              //     'Charts',
-              //     style: TextStyle(fontSize: 20.0, color: Colors.white),
-              //   ),
-              //   onTap: () {
-              //     // Update the state of the app
-              //     // ...
-              //     // Then close the drawer
-              //     //  Navigator.pop(context);
-              //     //  Navigator.pushNamed(context, Routes.charts);
-              //     Navigator.of(context).pushReplacement(
-              //         MaterialPageRoute(builder: (context) => Charts()));
-
-              //   },
-              // ),
+           
             ],
           ),
         ),
@@ -248,14 +191,26 @@ class _ChartsState extends State<Charts> {
                             SizedBox(height: 30.0),
                             Padding(
                               padding: EdgeInsets.all(2.0),
-                              child: new Sparkline(
-                                data: data,
-                                lineColor: Color(0xFFE4475B),
-                                pointColor: Color(0xFFEC7F79),
-                                pointsMode: PointsMode.all,
-                                pointSize: 1.0,
-                              ),
+                              
+                              child: (fdata == null && fdata.length == 0)
+                                  ? Text("No data")
+                                  : new Sparkline(
+                                      data: fdata,
+                                      lineColor: Color(0xFFE4475B),
+                                      pointColor: Color(0xFFEC7F79),
+                                      pointsMode: PointsMode.all,
+                                      pointSize: 6.0,
+                                    ),
                             ),
+                              // child: new Sparkline(
+                              //   data: fdata,
+                              //   lineColor: Color(0xFFE4475B),
+                              //   pointColor: Color(0xFFEC7F79),
+                              //   pointsMode: PointsMode.all,
+                              //   pointSize: 1.0,
+                              // ),
+                              //child: Text('$fdata'),
+                            
                           ],
                         ),
                       ),

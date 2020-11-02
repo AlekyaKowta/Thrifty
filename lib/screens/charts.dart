@@ -1,7 +1,9 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_sparkline/flutter_sparkline.dart';
 import 'package:thrifty/screens/authenticate/authenticate.dart';
-import 'package:thrifty/screens/authenticate/sign_in.dart';
-
+import 'package:charts_flutter/flutter.dart' as charts;
+import 'package:thrifty/services/crud.dart';
 import 'package:thrifty/screens/home/home.dart';
 import 'package:thrifty/screens/sab.dart';
 import 'package:thrifty/services/auth.dart';
@@ -18,6 +20,8 @@ class _ChartsState extends State<Charts> {
 
   DateTime selectedDate = DateTime.now();
 
+  List<double> data = [];
+
   _selectDate(BuildContext context) async {
     final DateTime picked = await showDatePicker(
       context: context,
@@ -29,10 +33,55 @@ class _ChartsState extends State<Charts> {
       setState(() {
         selectedDate = picked;
       });
+
+    // CrudMethods chartsMethod;
+
+    //   Future<void> chartsData() async {
+    //   data = await chartsMethod.chartData();
+
+    //   //orElse: () => null
+    //   setState(() {
+    //     print(data);
+    //   });
+    // }
+
+    @override
+    initState() {
+      super.initState();
+
+      chartsMethod = CrudMethods();
+      chartsData();
+
+      //data = await chartsMethod.chartData();
+      // List<double> doubleData = data.map((s) => s as double).toList();
+      // data = data.map((s) => s as double).ToList();
+      // data= data.cast<double>();
+      // List<double> fdata = new List<double>.from(data.whereType<double>());
+    }
+
+    // List<double> doubleData;
+  }
+
+  CrudMethods chartsMethod;
+
+  Future<void> chartsData() async {
+    data = await chartsMethod.chartData();
+
+    //orElse: () => null
+    setState(() {
+      print(data);
+    });
   }
 
   @override
   Widget build(BuildContext context) {
+    
+    print(data);
+    if (data.isEmpty) {
+      chartsData();
+      setState(() {});
+    }
+
     return Scaffold(
       backgroundColor: Color(0xFF3B3E4D),
       appBar: AppBar(
@@ -188,6 +237,33 @@ class _ChartsState extends State<Charts> {
                             fontSize: 20.0),
                       ),
                       color: Color(0xFFEC7F79),
+                    ),
+                  ),
+                  SingleChildScrollView(
+                    child: Container(
+                      child: Column(
+                        children: [
+                          SizedBox(height: 30.0),
+                          Text(
+                            'Expenses by Date',
+                            style: TextStyle(
+                                fontWeight: FontWeight.bold,
+                                color: Colors.white,
+                                fontSize: 25.0),
+                          ),
+                          SizedBox(height: 30.0),
+                          Padding(
+                            padding: EdgeInsets.all(2.0),
+                            child: new Sparkline(
+                              data: data,
+                              lineColor: Color(0xFFE4475B),
+                              pointColor: Color(0xFFEC7F79),
+                              pointsMode: PointsMode.all,
+                              pointSize: 1.0,
+                            ),
+                          ),
+                        ],
+                      ),
                     ),
                   ),
                 ],

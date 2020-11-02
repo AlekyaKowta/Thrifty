@@ -70,7 +70,7 @@ class CrudMethods {
 
   Future<List<DocumentSnapshot>> fetchMessages() async {
     //time of gettingcurrentuser error
-
+   
     final QuerySnapshot result = await Firestore.instance
         .collection('Users')
         .document('$uid')
@@ -78,8 +78,31 @@ class CrudMethods {
         .orderBy('time', descending: true)
         .getDocuments();
     final List<DocumentSnapshot> documents = result.documents;
+
+   
     //documents.forEach((data) => print(data));
+    //print(documents);
     return documents;
+  }
+
+  Future<List<double>> chartData() async {
+    //time of gettingcurrentuser error
+    var data = [];
+    final QuerySnapshot result = await Firestore.instance
+        .collection('Users')
+        .document('$uid')
+        .collection('expenses')
+        .orderBy('time', descending: true)
+        .getDocuments();
+    final List<DocumentSnapshot> documents = result.documents;
+
+    documents.forEach((element) {
+      data.add(element['amount']);
+    });
+    //documents.forEach((data) => print(data));
+    //print(documents);
+    print(data);
+    return data;
   }
 
   // fetchData() {

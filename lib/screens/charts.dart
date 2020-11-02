@@ -7,6 +7,7 @@ import 'package:thrifty/services/crud.dart';
 import 'package:thrifty/screens/home/home.dart';
 import 'package:thrifty/screens/sab.dart';
 import 'package:thrifty/services/auth.dart';
+import 'package:thrifty/shared/loading.dart';
 
 class Charts extends StatefulWidget {
   static const String routeName = '/charts';
@@ -66,8 +67,6 @@ class _ChartsState extends State<Charts> {
 
   Future<void> chartsData() async {
     data = await chartsMethod.chartData();
-
-    //orElse: () => null
     setState(() {
       print(data);
     });
@@ -75,13 +74,7 @@ class _ChartsState extends State<Charts> {
 
   @override
   Widget build(BuildContext context) {
-    
-    print(data);
-    if (data.isEmpty) {
-      chartsData();
-      setState(() {});
-    }
-
+    data = data != null ? data : Loading();
     return Scaffold(
       backgroundColor: Color(0xFF3B3E4D),
       appBar: AppBar(
@@ -239,30 +232,32 @@ class _ChartsState extends State<Charts> {
                       color: Color(0xFFEC7F79),
                     ),
                   ),
-                  SingleChildScrollView(
-                    child: Container(
-                      child: Column(
-                        children: [
-                          SizedBox(height: 30.0),
-                          Text(
-                            'Expenses by Date',
-                            style: TextStyle(
-                                fontWeight: FontWeight.bold,
-                                color: Colors.white,
-                                fontSize: 25.0),
-                          ),
-                          SizedBox(height: 30.0),
-                          Padding(
-                            padding: EdgeInsets.all(2.0),
-                            child: new Sparkline(
-                              data: data,
-                              lineColor: Color(0xFFE4475B),
-                              pointColor: Color(0xFFEC7F79),
-                              pointsMode: PointsMode.all,
-                              pointSize: 1.0,
+                  Flexible(
+                      child: SingleChildScrollView(
+                      child: Container(
+                        child: Column(
+                          children: [
+                            SizedBox(height: 30.0),
+                            Text(
+                              'Expenses by Date',
+                              style: TextStyle(
+                                  fontWeight: FontWeight.bold,
+                                  color: Colors.white,
+                                  fontSize: 25.0),
                             ),
-                          ),
-                        ],
+                            SizedBox(height: 30.0),
+                            Padding(
+                              padding: EdgeInsets.all(2.0),
+                              child: new Sparkline(
+                                data: data,
+                                lineColor: Color(0xFFE4475B),
+                                pointColor: Color(0xFFEC7F79),
+                                pointsMode: PointsMode.all,
+                                pointSize: 1.0,
+                              ),
+                            ),
+                          ],
+                        ),
                       ),
                     ),
                   ),
